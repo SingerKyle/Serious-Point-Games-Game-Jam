@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6fab5a851bd32ab43b7f776a158f9bbf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Scripts/MouseColliderController.cs
+  uploadId: 417592

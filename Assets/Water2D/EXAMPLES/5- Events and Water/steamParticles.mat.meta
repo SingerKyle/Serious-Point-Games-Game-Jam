@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a453a163c43f68b4eb10ff44289d912c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/5- Events and Water/steamParticles.mat
+  uploadId: 417592

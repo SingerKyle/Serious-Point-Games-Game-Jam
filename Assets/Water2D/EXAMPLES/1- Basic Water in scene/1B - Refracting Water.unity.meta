@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d8ef7b310ccaf574485ca052f357e57b
+timeCreated: 1527341218
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/1- Basic Water in scene/1B - Refracting Water.unity
+  uploadId: 417592

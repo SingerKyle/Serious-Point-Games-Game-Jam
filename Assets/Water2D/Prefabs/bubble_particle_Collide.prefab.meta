@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 32762e49b4d7f494692fb1df2a41a2d1
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Prefabs/bubble_particle_Collide.prefab
+  uploadId: 417592

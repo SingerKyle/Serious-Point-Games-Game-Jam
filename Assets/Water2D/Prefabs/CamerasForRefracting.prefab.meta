@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5884e236c09cb4fea9cdd88fd1ef12d1
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Prefabs/CamerasForRefracting.prefab
+  uploadId: 417592

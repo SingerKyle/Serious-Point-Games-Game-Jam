@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1bcdd66cc83e54079b8580edbfd83d87
+timeCreated: 1461656523
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Materials/WaterGrabPass.mat
+  uploadId: 417592

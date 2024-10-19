@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a904244b6e84f4107bcd94d1705d820f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/Editor/Settings/Settings.asset
+  uploadId: 417592

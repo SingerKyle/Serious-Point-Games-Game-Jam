@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 779713af8b15ca64ba8da6dd9ccf003c
+timeCreated: 1461656523
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Materials/OilRefractive.mat
+  uploadId: 417592

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e32814f43f316ea4a950cd421204a02b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/Editor/SettingsManager.cs
+  uploadId: 417592

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a1153fc22ea9446b58716dbb8b61a4c0
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Shaders/Metaballs_Refracting.shader
+  uploadId: 417592

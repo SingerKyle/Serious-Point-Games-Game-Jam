@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 84ecfe4f208e2624fb43874c9be5b726
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/Water2D_Spawner.cs
+  uploadId: 417592

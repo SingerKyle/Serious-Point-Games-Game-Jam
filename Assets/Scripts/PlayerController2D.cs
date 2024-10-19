@@ -17,18 +17,33 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_movementSpeed = 20f;
     [SerializeField] float m_swimmingSpeed = 20f;
     [SerializeField] float waterGravityScale = 1;
+    [SerializeField] float gravityScale = 9;
     [SerializeField] private float tiltAngle = 10f;  // Angle to tilt forward during movement
     [SerializeField] float jumpForce = 500f;         // Jump force applied to player
+
+
+    [SerializeField] public float waterDragFactor = 0.2f;
+    [SerializeField] public float buoyancyForce = 0.1f;
+    [SerializeField] public float impulseFactor = 0.1f;
+
+    // Reference to Oxygen System
+    [SerializeField] private OxygenSystem oxygenSystem;
 
     [Range(0, .3f)][SerializeField] private float m_movementSmooth = 0.125f;
 
 
     // Movement Direction Variables
+    private Vector2 inputDirection = Vector2.zero;
     float m_horizontalInput;
     float m_verticalInput;
     Vector2 m_moveDirection;
     Vector2 m_currentVelocity = Vector2.zero;
-   
+
+    // Audio clips for different player actions
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip swimSound;
+    [SerializeField] private AudioClip drownSound;
+    [SerializeField] private AudioClip BackgroundAmbience;
 
     bool m_isSwimming;
 
@@ -40,19 +55,44 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.PlaySFX(BackgroundAmbience);
         rb = GetComponent<Rigidbody2D>();
         m_isGrounded = true;
         m_isSwimming = false;
 
         // Lock the player's rotation to prevent flipping
         rb.freezeRotation = true;
+
+        if (oxygenSystem == null)
+        {
+            oxygenSystem = GetComponent<OxygenSystem>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector2 moveDirection = inputDirection.normalized;
         PlayerInput();
         ApplyTilt();  // Apply tilt in direction of movement
+
+        if (m_isSwimming)
+        {
+            oxygenSystem.DrainOxygen(); // Drain oxygen while swimming
+        }
+        else
+        {
+            oxygenSystem.RefillOxygen(); // Refill oxygen when out of water
+        }
+    
+
+        // Check if oxygen is zero (placeholder for death)
+        if (oxygenSystem.GetCurrentOxygen() <= 0)
+        {
+            Debug.Log("Player has drowned!");
+            RespawnPlayer();  // Respawn player at (0, 0) when drowned
+            // Placeholder for future death mechanic
+        }
     }
 
     private void FixedUpdate()
@@ -63,13 +103,15 @@ public class PlayerController : MonoBehaviour
         if (m_isGrounded && !m_isSwimming)
         {
             //change player move speed,dis allow y axis movement, change gravity effect
-            rb.gravityScale = 4f; // Default gravity
+            rb.gravityScale = gravityScale; // Default gravity
         }
         else if (m_isSwimming && !m_isGrounded)
         {
+            ApplyUnderwaterMovement(m_moveDirection);
             //change player move speed, allow y axis movement, change gravity effect
             rb.gravityScale = waterGravityScale; // No gravity when swimming
         }
+        Debug.Log(oxygenSystem.GetCurrentOxygen());
 
     }
 
@@ -81,7 +123,7 @@ public class PlayerController : MonoBehaviour
         if(m_isSwimming)
         {
             m_verticalInput = Input.GetAxisRaw("Vertical");
-            Debug.Log(m_verticalInput);
+            //Debug.Log(m_verticalInput);
         }
         else
         {
@@ -95,6 +137,11 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+    }
+
+    public void HandleDirectionalInput(Vector2 direction)
+    {
+        inputDirection = direction;
     }
 
     void MovePlayer()
@@ -113,14 +160,14 @@ public class PlayerController : MonoBehaviour
     {
         // Apply upward force to jump
         rb.AddForce(new Vector2(0f, jumpForce));
-        Debug.Log("Jumping!");
+        //Debug.Log("Jumping!");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("We've hit dry captain");
+            //Debug.Log("We've hit dry captain");
             m_isGrounded = true;
             //m_isSwimming = false;
         }
@@ -131,7 +178,7 @@ public class PlayerController : MonoBehaviour
     { 
         if(collider.gameObject.CompareTag("Water"))
         {
-            Debug.Log("Entering the water");
+            //Debug.Log("Entering the water");
             //m_isGrounded = false;
             m_isSwimming = true;
         }
@@ -152,7 +199,7 @@ public class PlayerController : MonoBehaviour
         if(collider.gameObject.CompareTag("Water"))
         {
             m_isSwimming = false;
-            Debug.Log("Exiting the water");
+            //Debug.Log("Exiting the water");
         }
     }
     private void ApplyTilt()
@@ -171,5 +218,36 @@ public class PlayerController : MonoBehaviour
             // Reset rotation when there is no movement
             transform.rotation = Quaternion.identity;
         }
+    }
+    private void DrainOxygen()
+    {
+        // Drain oxygen while in water
+        oxygenSystem.DrainOxygen();  // Call DrainOxygen without arguments
+    }
+
+    private void RefillOxygen()
+    {
+        // Refill oxygen when out of water
+        oxygenSystem.RefillOxygen();
+    }
+    private void ApplyUnderwaterMovement(Vector2 direction)
+    {
+        // Apply force based on direction with some impulse to simulate water resistance
+        Vector2 movementForce = direction * m_currentVelocity * (0.01f + impulseFactor);
+        movementForce.y += buoyancyForce;
+
+        rb.AddForce(movementForce, ForceMode2D.Force);
+    }
+
+    private void RespawnPlayer()
+    {
+        // Log respawn action
+        Debug.Log("Player has drowned. Respawning...");
+
+        // Reset player's position to (0, 0)
+        transform.position = new Vector2(0, 0);
+
+        // Optional: Reset the oxygen to full after respawn
+        oxygenSystem.Start(); // Reinitialize oxygen
     }
 }

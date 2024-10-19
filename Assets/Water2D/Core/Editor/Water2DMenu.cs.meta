@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 35401e2e4d9ec9e4f905cb602d98625d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/Editor/Water2DMenu.cs
+  uploadId: 417592

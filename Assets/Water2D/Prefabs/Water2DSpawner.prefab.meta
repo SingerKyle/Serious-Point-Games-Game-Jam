@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b778762d3ec6d4397a4dd760a3ce7173
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Prefabs/Water2DSpawner.prefab
+  uploadId: 417592

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 778592d6ddbbf4c85800b7568880b5e0
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Shaders/GrabPassInvertColors.shader
+  uploadId: 417592

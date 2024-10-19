@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2050ffc1fd8704ccf937de7e8d6e79a3
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Shaders/Metaballs_Simple.shader
+  uploadId: 417592

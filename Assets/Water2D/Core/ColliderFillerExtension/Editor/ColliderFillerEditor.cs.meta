@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2d5b0806b26713d4281e9b9735c18a1f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/ColliderFillerExtension/Editor/ColliderFillerEditor.cs
+  uploadId: 417592
