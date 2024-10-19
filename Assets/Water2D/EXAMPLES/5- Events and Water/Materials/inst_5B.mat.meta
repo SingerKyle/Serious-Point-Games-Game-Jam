@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 88c09a9f8371c4840961401dfef448c1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/5- Events and Water/Materials/inst_5B.mat
+  uploadId: 417592

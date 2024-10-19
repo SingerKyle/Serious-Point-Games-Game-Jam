@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0b25cb90747d40248baca2d4115a7723
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Materials/Trail_URP.mat
+  uploadId: 417592

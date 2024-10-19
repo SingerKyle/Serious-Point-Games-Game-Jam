@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 356edd7ff4f9a3f468254b80c63e530e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 6200000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Physics Materials/Bouncy Water (extra).physicsMaterial2D
+  uploadId: 417592

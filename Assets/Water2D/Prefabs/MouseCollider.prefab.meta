@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6ed698f20ac63724aa1cd49760f98265
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Prefabs/MouseCollider.prefab
+  uploadId: 417592

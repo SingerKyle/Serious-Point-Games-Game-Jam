@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 948d108d821744f33862236d85e3d974
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Shaders/ForLWRP_unlit.shadergraph
+  uploadId: 417592

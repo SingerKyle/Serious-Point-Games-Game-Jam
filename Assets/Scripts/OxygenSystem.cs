@@ -19,19 +19,20 @@ public class OxygenSystem : MonoBehaviour
 
     public void RefillOxygen()
     {
-        currentOxygen = Mathf.Min(currentOxygen + oxygenRegenRate, maxOxygen);
+        currentOxygen = Mathf.Min(currentOxygen + (oxygenRegenRate * Time.deltaTime), maxOxygen);
     }
 
-    public void DrainOxygen(float oxygenChangeNum)
+    public void DrainOxygen()
     {
-        if (oxygenChangeNum < 0)
-        {
-            currentOxygen = Mathf.Max(currentOxygen + oxygenDrainRate, 0);
-        }
+        currentOxygen = Mathf.Max(currentOxygen - (oxygenDrainRate * Time.deltaTime), 0f);
     }
 
     public float GetCurrentOxygen() 
     {
         return currentOxygen;
+    }
+    public float GetOxygenDrainRate()
+    {
+        return oxygenDrainRate;
     }
 }

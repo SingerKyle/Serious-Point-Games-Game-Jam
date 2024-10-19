@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 56982d73a4a2f4870ac5aad9938761f9
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/5- Events and Water/5B- Check shape filled using
+    collider2D.unity
+  uploadId: 417592

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a481fb7c80091f44c855e9342b0a4954
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/ColliderFillerExtension/ColliderTrigger.cs
+  uploadId: 417592

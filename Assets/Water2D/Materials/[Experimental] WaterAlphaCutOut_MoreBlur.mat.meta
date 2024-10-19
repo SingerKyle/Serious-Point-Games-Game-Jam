@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c92ab9f1d5a05694e850317b9542740e
+timeCreated: 1461656523
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Materials/[Experimental] WaterAlphaCutOut_MoreBlur.mat
+  uploadId: 417592

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a4ae4fa7300c64972a4dc981fc93f0d2
+timeCreated: 1461657675
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Prefabs/WaterDropRefractive.prefab
+  uploadId: 417592

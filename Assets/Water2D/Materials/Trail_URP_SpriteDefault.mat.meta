@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 68681e0fac9d142aaad15bc20598b0ed
+timeCreated: 1461656523
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Materials/Trail_URP_SpriteDefault.mat
+  uploadId: 417592

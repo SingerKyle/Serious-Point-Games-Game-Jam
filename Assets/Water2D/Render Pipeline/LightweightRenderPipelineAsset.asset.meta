@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5f178595565cc78419c1eeabe19decb5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Render Pipeline/LightweightRenderPipelineAsset.asset
+  uploadId: 417592

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aaa5e21e5f71e4e459dab1d53cfa136b
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/5- Events and Water/5- Play sound when water
+    is spawning.unity
+  uploadId: 417592

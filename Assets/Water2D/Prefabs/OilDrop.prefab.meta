@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 88fa9d1d05cb1f3448529c2f43d38afa
+timeCreated: 1461657675
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Prefabs/OilDrop.prefab
+  uploadId: 417592

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b2617cb6ad3e1496089a17e446a65aa3
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/6- Water and physics objects/6A- Water and physics
+    objects[Low mass water particles].unity
+  uploadId: 417592

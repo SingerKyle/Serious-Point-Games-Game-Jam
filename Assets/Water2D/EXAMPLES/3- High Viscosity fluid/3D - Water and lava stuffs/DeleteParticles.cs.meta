@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: fda9e733339bdf047ab8650100ce6121
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/3- High Viscosity fluid/3D - Water and lava
+    stuffs/DeleteParticles.cs
+  uploadId: 417592

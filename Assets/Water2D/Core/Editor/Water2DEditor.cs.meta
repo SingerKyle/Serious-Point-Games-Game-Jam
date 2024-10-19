@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3debc05c51cee4b429ef52c4640ecc02
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Core/Editor/Water2DEditor.cs
+  uploadId: 417592

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 56cbb41c8b58ada4880231993f1268f0
+timeCreated: 1461656523
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Materials/WaterGrabPass_URP.mat
+  uploadId: 417592

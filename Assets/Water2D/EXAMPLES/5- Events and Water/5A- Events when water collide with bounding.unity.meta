@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0469700816ce87f4da2bf7d0e0e625d9
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/EXAMPLES/5- Events and Water/5A- Events when water collide
+    with bounding.unity
+  uploadId: 417592

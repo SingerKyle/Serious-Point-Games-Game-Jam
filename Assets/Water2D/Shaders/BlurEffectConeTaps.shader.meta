@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 57e6deea7c2924e22a5138e2b70bb4dc
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Shaders/BlurEffectConeTaps.shader
+  uploadId: 417592

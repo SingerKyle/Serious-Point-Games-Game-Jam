@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e3c9627536216c048aa086b31d59f3a0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 6200000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155772
+  packageName: Water 2D Pro
+  packageVersion: 1.8.6
+  assetPath: Assets/Water2D/Physics Materials/Dense Oil.physicsMaterial2D
+  uploadId: 417592
