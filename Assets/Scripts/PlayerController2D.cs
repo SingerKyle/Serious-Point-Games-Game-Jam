@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     // Variables for editor adjustment
     //SerializeField] float m_jumpForce = 400f;
     [SerializeField] float m_movementSpeed = 400f; //public Vector2 m_movementSpeed = new Vector2(200f,200f);
-    [Range(0, .3f)][SerializeField] private float m_movementSmooth = 0.05f;
+    [Range(0, .3f)][SerializeField] private float m_movementSmooth = 0.125f;
 
 
     // Movement Direction Variables
