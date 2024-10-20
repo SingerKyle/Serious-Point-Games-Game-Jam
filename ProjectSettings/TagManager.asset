@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Water
+  - Metaball_liquid
   layers:
   - Default
   - TransparentFX
