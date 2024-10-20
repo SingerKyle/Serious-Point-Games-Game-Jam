@@ -17,8 +17,19 @@ public class PlayerLighting : MonoBehaviour
 
     private Vector3 initialLightPosition;
 
+    // --------- Timer for candle light ---------
+    // Total duration
+    [SerializeField] private float candleTime = 100f;
+    // current candle time
+    private float currentCandleTime;
+    // how fast the candle drains
+    [SerializeField] private float candleDrainRate = 1.5f;
+    [SerializeField] private float candleDimThreshhold = 20f;
+
     void Start()
     {
+
+
         if (player == null)
         {
             player = this.transform; // Assume the script is on the player if no player is assigned
@@ -28,6 +39,8 @@ public class PlayerLighting : MonoBehaviour
         {
             spotlight = GetComponent<Light2D>(); // Find the Light2D component on this object
         }
+
+        currentCandleTime = candleTime;
 
         // Store the initial light position relative to the player
         initialLightPosition = spotlight.transform.localPosition;
@@ -40,6 +53,16 @@ public class PlayerLighting : MonoBehaviour
 
         // You can adjust light properties dynamically based on certain conditions (optional)
         UpdateLightIntensity();
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (currentCandleTime > 0f)
+        {
+            LowerCandleNum();
+        }
+        
     }
 
     void FollowPlayer()
@@ -63,5 +86,31 @@ public class PlayerLighting : MonoBehaviour
 
         // Clamp the intensity to avoid negative values
         spotlight.intensity = Mathf.Clamp(spotlight.intensity, 0.0f, lightIntensity);
+    }
+
+    public void LowerCandleNum()
+    {
+        // Decrease based on frame rate.
+        currentCandleTime -= candleDrainRate * Time.fixedDeltaTime;
+
+        Debug.Log("Candle Num - " + currentCandleTime);
+
+        if (currentCandleTime <= candleDimThreshhold) 
+        {
+            spotlight.intensity = Mathf.Max(0.05f, spotlight.intensity - intensityChangeSpeed * Time.fixedDeltaTime);
+
+            if (spotlight.intensity <= 0f)
+            {
+                currentCandleTime = 0f;
+                spotlight.enabled = false;
+            }
+        }
+    }
+
+    public void ReplenishCandle()
+    {
+        spotlight.enabled = true;
+        currentCandleTime = 100f;
+        spotlight.intensity = lightIntensity;
     }
 }

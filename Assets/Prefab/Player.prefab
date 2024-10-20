@@ -355,6 +355,9 @@ MonoBehaviour:
   lightRange: 5
   intensityChangeSpeed: 0.1
   lightOffset: 0.5
+  candleTime: 50
+  candleDrainRate: 2.5
+  candleDimThreshhold: 25
 --- !u!1 &8281946624484010926
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,6 @@ public class Key : MonoBehaviour
 
     private void Start()
     {
-        itemName = "Key";
 
         // Get our Inventory Menu
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
@@ -42,6 +41,9 @@ public class Key : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         Debug.Log("Trigger");
+
+        
+
         if (collision.gameObject.CompareTag("Player")) // set player to player tag
         {
             Debug.Log("Press _ to pick up + itenName");
