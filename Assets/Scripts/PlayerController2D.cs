@@ -121,13 +121,28 @@ public class PlayerController : MonoBehaviour
 
         if (m_horizontalInput < 0)
         {
-            transform.localScale = new Vector3(-2, 2, 1);
+            if(m_isSwimming)
+            {
+                transform.localScale = new Vector3(2, 2, 1);
+            }
+            else
+            {
+                transform.localScale = new Vector3(-2, 2, 1);
+            }
+            
         }
         else if (m_horizontalInput > 0)
         {
-            transform.localScale = new Vector3(2, 2, 1);
+            if (m_isSwimming)
+            {
+                transform.localScale = new Vector3(-2, 2, 1);
+            }
+            else
+            {
+                transform.localScale = new Vector3(2, 2, 1);
+            }
+            
         }
-        //animator.SetBool("isSwimming", m_isSwimming);              // Set the swimming state
     }
 
 
@@ -218,6 +233,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Entering the water");
             //m_isGrounded = false;
             m_isSwimming = true;
+            animator.SetBool("isSwimming", m_isSwimming);
         }
     }
 
@@ -236,6 +252,7 @@ public class PlayerController : MonoBehaviour
         if(collider.gameObject.CompareTag("Water"))
         {
             m_isSwimming = false;
+            animator.SetBool("isSwimming", m_isSwimming);
             //Debug.Log("Exiting the water");
         }
     }

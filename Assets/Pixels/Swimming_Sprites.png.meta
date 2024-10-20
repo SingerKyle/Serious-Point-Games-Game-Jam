@@ -66,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -250,7 +250,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Swimming_Sprites_0: 7082449975858973545
+      Swimming_Sprites_1: -7456076574394043893
+      Swimming_Sprites_2: -3103129440476721066
+      Swimming_Sprites_3: 9222768214415744457
+      Swimming_Sprites_4: 1337581146810158947
+      Swimming_Sprites_5: -3530883815057030183
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
