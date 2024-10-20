@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_swimmingSpeed = 20f;
     [SerializeField] float waterGravityScale = 1;
     [SerializeField] float gravityScale = 9;
-    [SerializeField] private float tiltAngle = 10f;  // Angle to tilt forward during movement
+    [SerializeField] private float tiltAngle = 5f;  // Angle to tilt forward during movement
     [SerializeField] float jumpForce = 500f;         // Jump force applied to player
 
 
@@ -45,6 +45,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip drownSound;
     [SerializeField] private AudioClip BackgroundAmbience;
 
+    // Animator reference
+    private Animator animator;
+
     bool m_isSwimming;
 
     bool m_isGrounded;
@@ -55,7 +58,20 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Check and assign the Animator
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found on the player object!");  // Error message if the Animator is not found
+        }
+        else
+        {
+            Debug.Log("Animator found and assigned successfully.");
+        }
+
         GameManager.instance.PlaySFX(BackgroundAmbience);
+
         rb = GetComponent<Rigidbody2D>();
         m_isGrounded = true;
         m_isSwimming = false;
@@ -93,7 +109,27 @@ public class PlayerController : MonoBehaviour
             RespawnPlayer();  // Respawn player at (0, 0) when drowned
             // Placeholder for future death mechanic
         }
+        // Update animator parameters
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(m_horizontalInput));  // Line 101
+        }
+        else
+        {
+            Debug.LogError("Animator is null!");
+        }
+
+        if (m_horizontalInput < 0)
+        {
+            transform.localScale = new Vector3(-2, 2, 1);
+        }
+        else if (m_horizontalInput > 0)
+        {
+            transform.localScale = new Vector3(2, 2, 1);
+        }
+        //animator.SetBool("isSwimming", m_isSwimming);              // Set the swimming state
     }
+
 
     private void FixedUpdate()
     {
@@ -111,7 +147,7 @@ public class PlayerController : MonoBehaviour
             //change player move speed, allow y axis movement, change gravity effect
             rb.gravityScale = waterGravityScale; // No gravity when swimming
         }
-        Debug.Log(oxygenSystem.GetCurrentOxygen());
+        //Debug.Log(oxygenSystem.GetCurrentOxygen());
 
     }
 
@@ -137,6 +173,7 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+        Debug.Log($"Horizontal Input: {m_horizontalInput}");
     }
 
     public void HandleDirectionalInput(Vector2 direction)
