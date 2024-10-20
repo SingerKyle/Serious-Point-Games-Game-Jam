@@ -45,7 +45,7 @@ public class Key : MonoBehaviour
         if (collision.gameObject.CompareTag("Player")) // set player to player tag
         {
             Debug.Log("Press _ to pick up + itenName");
-            if (Input.GetButtonDown("Fire1") && !isPickingUp)
+            if (Input.GetButton("Interact") && !isPickingUp)
             {
                 isPickingUp = true;
 

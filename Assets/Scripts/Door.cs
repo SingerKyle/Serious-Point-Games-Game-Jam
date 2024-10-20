@@ -43,13 +43,15 @@ public class Door : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        Debug.Log("Trigger");
+
         // if door is locked return
-        if(isLocked) 
+        if (isLocked) 
         {
             return;
         }   
         
-        if (collision.CompareTag("Player") && Input.GetButtonDown("Fire1"))
+        if (collision.CompareTag("Player") && Input.GetButton("Interact"))
         {
             if (!isOpen)
             {
