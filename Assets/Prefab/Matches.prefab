@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e295de839452d4d98669f1e4604625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: '"Matches"'
+  itemName: Matches
   quantity: 3
   sprite: {fileID: -9095717837082945937, guid: 34587324d412940a79d530020c957dc0, type: 3}
   itemDescription: Matches. Bright. Light...

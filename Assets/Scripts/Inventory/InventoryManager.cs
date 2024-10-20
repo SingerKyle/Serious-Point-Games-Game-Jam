@@ -36,7 +36,7 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < itemSOs.Length; i++)
         {
-            //Debug.Log("Search Name - " + itemName + " Current ItemSO - " + itemSOs[i].ToString() + " Length of ItemSO - " + itemSOs.Length.ToString());
+            Debug.Log("Search Name - " + itemName + " Current ItemSO - " + itemSOs[i].ToString() + " Length of ItemSO - " + itemSOs.Length.ToString());
 
             if (itemSOs[i].itemName == itemName)
             {

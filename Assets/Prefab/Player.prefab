@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3357833623611686574}
   - component: {fileID: 8925193258411021802}
   - component: {fileID: 7613109282692962301}
-  - component: {fileID: 4105716120619171940}
+  - component: {fileID: 2016388512979264129}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -82,12 +82,12 @@ SpriteRenderer:
   m_SortingLayerID: 930523329
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1901086643786360659, guid: b8c03c5c28e4572449c348511d700fc6, type: 3}
+  m_Sprite: {fileID: -3604961663378900437, guid: c6ec665b93601604a85355ff20c4e3cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 8, y: 7.75}
+  m_Size: {x: 0.390625, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 9
+  m_GravityScale: 6
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -132,24 +132,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c5753abe0964d43ac3000f5eb2565d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 7
-  m_swimmingSpeed: 3
+  m_movementSpeed: 8
+  m_swimmingSpeed: 5
   waterGravityScale: 1
   gravityScale: 9
   tiltAngle: 0
-  jumpForce: 1000
+  jumpForce: 2000
   waterDragFactor: 1
   buoyancyForce: 1
   impulseFactor: 1
   oxygenSystem: {fileID: 3386873208264382824}
-  m_movementSmooth: 0.05
+  m_movementSmooth: 0.075
   jumpSound: {fileID: 0}
   swimSound: {fileID: 0}
   drownSound: {fileID: 0}
   BackgroundAmbience:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 28bd5824519e6ef47a2dfe9b1aae4833, type: 3}
+  - {fileID: 8300000, guid: c55e09fc39a62dc4a988412d0060659a, type: 3}
+  - {fileID: 8300000, guid: 22021e8e54f65544ca7c4625a6d9aa30, type: 3}
+  - {fileID: 8300000, guid: 5975b571e9d29864b8e42e5367f09909, type: 3}
   rb: {fileID: 8807897198423693803}
 --- !u!61 &8925193258411021802
 BoxCollider2D:
@@ -185,17 +186,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.1635688, y: 0.051193252}
+  m_Offset: {x: 0.1635688, y: 0.012278438}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.359375, y: 0.96875}
-    newSize: {x: 8, y: 7.75}
+    oldSize: {x: 0.390625, y: 1}
+    newSize: {x: 0.390625, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.47713757, y: 0.32850412}
+  m_Size: {x: 0.47713757, y: 1.0178506}
   m_EdgeRadius: 0
 --- !u!95 &7613109282692962301
 Animator:
@@ -219,7 +220,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &4105716120619171940
+--- !u!58 &2016388512979264129
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,10 +233,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

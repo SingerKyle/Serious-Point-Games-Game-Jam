@@ -125,27 +125,11 @@ public class PlayerController : MonoBehaviour
 
         if (m_horizontalInput < 0)
         {
-            if(m_isSwimming)
-            {
-                transform.localScale = new Vector3(2, 2, 1);
-            }
-            else
-            {
-                transform.localScale = new Vector3(-2, 2, 1);
-            }
-            
+            transform.localScale = new Vector3(2, 2, 1);
         }
         else if (m_horizontalInput > 0)
         {
-            if (m_isSwimming)
-            {
-                transform.localScale = new Vector3(-2, 2, 1);
-            }
-            else
-            {
-                transform.localScale = new Vector3(2, 2, 1);
-            }
-            
+            transform.localScale = new Vector3(-2, 2, 1);
         }
     }
 
@@ -160,11 +144,15 @@ public class PlayerController : MonoBehaviour
             //change player move speed,dis allow y axis movement, change gravity effect
             rb.gravityScale = gravityScale; // Default gravity
         }
-        else if (m_isSwimming && !m_isGrounded)
+        else if (m_isSwimming)
         {
             ApplyUnderwaterMovement(m_moveDirection);
             //change player move speed, allow y axis movement, change gravity effect
             rb.gravityScale = waterGravityScale; // No gravity when swimming
+        }
+        else
+        {
+            rb.gravityScale = gravityScale;
         }
         //Debug.Log(oxygenSystem.GetCurrentOxygen());
 
@@ -215,7 +203,8 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         // Apply upward force to jump
-        rb.AddForce(new Vector2(0f, jumpForce));
+        rb.AddForce(new Vector2(rb.velocityX, jumpForce));
+        animator.SetTrigger("Jump!");
         //Debug.Log("Jumping!");
     }
 
@@ -228,6 +217,14 @@ public class PlayerController : MonoBehaviour
             //m_isSwimming = false;
         }
 
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            m_isGrounded = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

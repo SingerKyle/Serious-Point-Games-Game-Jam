@@ -78,7 +78,7 @@ public class ItemSO : ScriptableObject
         }
 
         // Get the player's collider
-        Collider2D playerCollider = player.GetComponent<CircleCollider2D>();
+        Collider2D playerCollider = player.GetComponentInChildren<CircleCollider2D>();
         if (playerCollider == null)
         {
             return false;

@@ -1,19 +1,28 @@
 fileFormatVersion: 2
-guid: b8c03c5c28e4572449c348511d700fc6
+guid: 4b0982082fbf647498706a7066518caf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1901086643786360659
-    second: properly_exported_walking_cycle_0
+      213: -1981418222017897944
+    second: jumping_0
   - first:
-      213: 8721398536093356162
-    second: properly_exported_walking_cycle_1
+      213: -7642617639853138913
+    second: jumping_1
   - first:
-      213: -2920373397686748638
-    second: properly_exported_walking_cycle_2
+      213: 238710075600487543
+    second: jumping_2
   - first:
-      213: -3683506075829886607
-    second: properly_exported_walking_cycle_3
+      213: -4932991158002552226
+    second: jumping_3
+  - first:
+      213: -5141622052053764728
+    second: jumping_4
+  - first:
+      213: 4284155304752126467
+    second: jumping_5
+  - first:
+      213: -2720617303241217330
+    second: jumping_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,64 +114,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: tvOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: properly_exported_walking_cycle_0
+      name: jumping_0
       rect:
         serializedVersion: 2
         x: 20
-        y: 1
-        width: 23
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 357202aea34026a10800000000000000
-      internalID: 1901086643786360659
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: properly_exported_walking_cycle_1
-      rect:
-        serializedVersion: 2
-        x: 79
         y: 0
-        width: 34
-        height: 61
+        width: 25
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,41 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 280d478b2c1a80970800000000000000
-      internalID: 8721398536093356162
+      spriteID: 82a132500a69084e0800000000000000
+      internalID: -1981418222017897944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: properly_exported_walking_cycle_2
+      name: jumping_1
       rect:
         serializedVersion: 2
-        x: 148
-        y: 1
-        width: 23
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 22a716b1edfb877d0800000000000000
-      internalID: -2920373397686748638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: properly_exported_walking_cycle_3
-      rect:
-        serializedVersion: 2
-        x: 208
+        x: 77
         y: 0
-        width: 29
-        height: 62
+        width: 37
+        height: 58
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,8 +153,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 171aa267dbe81ecc0800000000000000
-      internalID: -3683506075829886607
+      spriteID: f1c5b66bfb7ffe590800000000000000
+      internalID: -7642617639853138913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumping_2
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 774497c8c81105300800000000000000
+      internalID: 238710075600487543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumping_3
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 6
+        width: 43
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e527d1b8dae7a8bb0800000000000000
+      internalID: -4932991158002552226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumping_4
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 0
+        width: 33
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88535023cf945a8b0800000000000000
+      internalID: -5141622052053764728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumping_5
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 0
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a1b5e1d80647b30800000000000000
+      internalID: 4284155304752126467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumping_6
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 0
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecaa6862afc6e3ad0800000000000000
+      internalID: -2720617303241217330
       vertices: []
       indices: 
       edges: []
@@ -221,7 +267,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: df48a4d5dcaa71f449f9f6ba41a145a8
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -229,10 +275,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      properly_exported_walking_cycle_0: 1901086643786360659
-      properly_exported_walking_cycle_1: 8721398536093356162
-      properly_exported_walking_cycle_2: -2920373397686748638
-      properly_exported_walking_cycle_3: -3683506075829886607
+      jumping_0: -1981418222017897944
+      jumping_1: -7642617639853138913
+      jumping_2: 238710075600487543
+      jumping_3: -4932991158002552226
+      jumping_4: -5141622052053764728
+      jumping_5: 4284155304752126467
+      jumping_6: -2720617303241217330
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
