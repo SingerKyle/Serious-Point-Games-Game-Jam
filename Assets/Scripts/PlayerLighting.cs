@@ -26,6 +26,9 @@ public class PlayerLighting : MonoBehaviour
     [SerializeField] private float candleDrainRate = 1.5f;
     [SerializeField] private float candleDimThreshhold = 20f;
 
+    // --------- debug ---------
+    [SerializeField] private bool shouldCandleDecay = true;
+
     void Start()
     {
 
@@ -58,7 +61,7 @@ public class PlayerLighting : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentCandleTime > 0f)
+        if (currentCandleTime > 0f && shouldCandleDecay)
         {
             LowerCandleNum();
         }
@@ -97,7 +100,7 @@ public class PlayerLighting : MonoBehaviour
 
         if (currentCandleTime <= candleDimThreshhold) 
         {
-            spotlight.intensity = Mathf.Max(0.05f, spotlight.intensity - intensityChangeSpeed * Time.fixedDeltaTime);
+            spotlight.intensity = Mathf.Clamp(Mathf.Max(0.05f, spotlight.intensity - intensityChangeSpeed * Time.fixedDeltaTime), 0, candleTime);
 
             if (spotlight.intensity <= 0f)
             {
