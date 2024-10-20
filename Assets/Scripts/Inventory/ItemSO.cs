@@ -17,9 +17,15 @@ public class ItemSO : ScriptableObject
                 break;
             case StatToChange.lightSource:
                 break;
-            case StatToChange.unlockable:
+            case StatToChange.key:
+                DoorUnlockAttempt();
                 break;
         }
+    }
+
+    protected void DoorUnlockAttempt()
+    {
+
     }
 
     // for any potential healing items etc
@@ -27,6 +33,6 @@ public class ItemSO : ScriptableObject
     {
         none,
         lightSource,
-        unlockable
+        key
     };
 }

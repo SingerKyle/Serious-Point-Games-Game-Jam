@@ -96,20 +96,18 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void ReduceItems()
+    private void RemoveItems()
     {
-        this.quantity -= 1;
-        quantityText.text = this.quantity.ToString();
+        quantityText.enabled = false;
+        itemImage.sprite = null;
+        itemImage.enabled = false;
+        itemDescription = "";
+        itemName = "";
+        itemSprite = null;
 
-        if (this.quantity <= 0)
-        {
-            quantityText.enabled = false;
-            itemImage.sprite = emptySprite;
-
-            itemDescriptionNameText.text = "";
-            itemDescriptionDescriptionText.text = "";
-            itemDescriptionImage.sprite = null;
-        }
+        itemDescriptionNameText.text = "";
+        itemDescriptionDescriptionText.text = "";
+        itemDescriptionImage.sprite = null;
 
     }
 
@@ -118,11 +116,21 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         if (thisItemIsSelected)
         {
             inventoryManager.UseItem(itemName);
-            // remove an item / clear slot
-            ReduceItems();
+            if (this.quantity > 0)
+            {
+                this.quantity -= 1;
+                quantityText.text = this.quantity.ToString();
+            }
+            if (this.quantity <= 0)
+            {
+                RemoveItems();
+            }
+
+            thisItemIsSelected = false;
         }
         else
         {
+
             // better way to do this, look at later
             inventoryManager.DeselectAllSlots();
 
@@ -134,13 +142,44 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             itemDescriptionImage.sprite = itemSprite;
             if (itemDescriptionImage.sprite == null)
             {
-                itemDescriptionImage.sprite = null;
+                itemDescriptionImage.sprite = emptySprite;
             }
         }
     }
 
     public void OnRightClick()
     {
+        if (this.quantity > 0)
+        {
+            // Drop Items - Create dropped item
+            GameObject dropItem = new GameObject(itemName);
+            Key newItem = dropItem.AddComponent<Key>();
+            
+            newItem.Initialise(itemName, 1, itemSprite, itemDescription);
 
+            SpriteRenderer sr = dropItem.AddComponent<SpriteRenderer>();
+            sr.sprite = itemSprite;
+            sr.sortingOrder = 5;
+            sr.sortingLayerName = "Player";
+
+            // add collider
+            dropItem.AddComponent<BoxCollider2D>().isTrigger = true;
+
+            // add float script
+            dropItem.AddComponent<FloatItem>();
+
+            // set posiiton
+            dropItem.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(2f, 0, 0);
+            dropItem.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+        
+            this.quantity -= 1;
+            quantityText.text = this.quantity.ToString();
+        }
+
+        if (this.quantity <= 0)
+        {
+            RemoveItems();
+        }
     }
 }

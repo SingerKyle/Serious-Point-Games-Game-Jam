@@ -3,8 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Key : InteractableItems
+public class Key : MonoBehaviour
 {
+    // --------- Base variables for each item ---------
+    [SerializeField] protected string itemName;
+    [SerializeField] protected int quantity;
+    [SerializeField] protected Sprite sprite;
+    [TextArea][SerializeField] protected string itemDescription;
+
+    // --------- Inventory Manager ---------
+    protected InventoryManager inventoryManager;
+
+    public virtual void Initialise(string name, int quantity, Sprite sprite, string description)
+    {
+        itemName = name;
+        this.quantity = quantity;
+        this.sprite = sprite;
+        itemDescription = description;
+    }
 
     private void Start()
     {

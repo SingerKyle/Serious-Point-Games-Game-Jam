@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire2") && menuActivated)
+        if (Input.GetButtonDown("Submit") && menuActivated)
         {
             // Play Game
             Time.timeScale = 1f;
@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
             menuActivated = false;
             return;
         }
-        else if (Input.GetButtonDown("Fire2") && !menuActivated)
+        else if (Input.GetButtonDown("Submit") && !menuActivated)
         {
             // Pause Game
             Time.timeScale = 0f;

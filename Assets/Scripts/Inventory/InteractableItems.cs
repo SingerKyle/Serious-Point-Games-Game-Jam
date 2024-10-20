@@ -13,6 +13,13 @@ public abstract class InteractableItems : MonoBehaviour
     // --------- Inventory Manager ---------
     protected InventoryManager inventoryManager;
 
+    public virtual void Initialise(string name, int quantity, Sprite sprite, string description)
+    {
+        itemName = name;
+        this.quantity = quantity;
+        this.sprite = sprite;
+        itemDescription = description;
+    }
 }
 
 
