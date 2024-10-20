@@ -136,7 +136,7 @@ MonoBehaviour:
   m_swimmingSpeed: 3
   waterGravityScale: 1
   gravityScale: 9
-  tiltAngle: 10
+  tiltAngle: 0
   jumpForce: 1000
   waterDragFactor: 1
   buoyancyForce: 1
@@ -146,7 +146,10 @@ MonoBehaviour:
   jumpSound: {fileID: 0}
   swimSound: {fileID: 0}
   drownSound: {fileID: 0}
-  BackgroundAmbience: {fileID: 8300000, guid: 28bd5824519e6ef47a2dfe9b1aae4833, type: 3}
+  BackgroundAmbience:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   rb: {fileID: 8807897198423693803}
 --- !u!61 &8925193258411021802
 BoxCollider2D:
