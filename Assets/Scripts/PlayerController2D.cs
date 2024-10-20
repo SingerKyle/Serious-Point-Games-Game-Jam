@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip swimSound;
     [SerializeField] private AudioClip drownSound;
-    [SerializeField] private AudioClip BackgroundAmbience;
+    [SerializeField] private List<AudioClip> BackgroundAmbience;
 
     // Animator reference
     private Animator animator;
@@ -70,7 +70,11 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Animator found and assigned successfully.");
         }
 
-        GameManager.instance.PlaySFX(BackgroundAmbience);
+        if (BackgroundAmbience.Count > 0)
+        {
+            int randomIndex = Random.Range(0, BackgroundAmbience.Count);
+            GameManager.instance.PlaySFX(BackgroundAmbience[randomIndex]);
+        }
 
         rb = GetComponent<Rigidbody2D>();
         m_isGrounded = true;

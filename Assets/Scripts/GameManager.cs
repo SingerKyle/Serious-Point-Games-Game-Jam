@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     // Audio Source for managing background music and sound effects
     public AudioSource musicSource;
     public AudioSource sfxSource;
+    //[SerializeField] private List<AudioClip> BackgroundAmbience;
 
     // Other global systems can be added here, for example:
     public bool isPaused = false;
