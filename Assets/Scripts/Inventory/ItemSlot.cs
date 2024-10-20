@@ -96,20 +96,46 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    private void ReduceItems()
+    {
+        this.quantity -= 1;
+        quantityText.text = this.quantity.ToString();
+
+        if (this.quantity <= 0)
+        {
+            quantityText.enabled = false;
+            itemImage.sprite = emptySprite;
+
+            itemDescriptionNameText.text = "";
+            itemDescriptionDescriptionText.text = "";
+            itemDescriptionImage.sprite = null;
+        }
+
+    }
+
     public void OnLeftClick()
     {
-        // better way to do this, look at later
-        inventoryManager.DeselectAllSlots();
-
-        selectedBox.SetActive(true);
-        thisItemIsSelected = true;
-
-        itemDescriptionNameText.text = itemName;
-        itemDescriptionDescriptionText.text = itemDescription;
-        itemDescriptionImage.sprite = itemSprite;
-        if(itemDescriptionImage.sprite == null)
+        if (thisItemIsSelected)
         {
-            itemDescriptionImage.sprite = emptySprite;
+            inventoryManager.UseItem(itemName);
+            // remove an item / clear slot
+            ReduceItems();
+        }
+        else
+        {
+            // better way to do this, look at later
+            inventoryManager.DeselectAllSlots();
+
+            selectedBox.SetActive(true);
+            thisItemIsSelected = true;
+
+            itemDescriptionNameText.text = itemName;
+            itemDescriptionDescriptionText.text = itemDescription;
+            itemDescriptionImage.sprite = itemSprite;
+            if (itemDescriptionImage.sprite == null)
+            {
+                itemDescriptionImage.sprite = null;
+            }
         }
     }
 
