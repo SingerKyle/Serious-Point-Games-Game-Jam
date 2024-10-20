@@ -11,6 +11,9 @@ public class Key : MonoBehaviour
     [SerializeField] protected Sprite sprite;
     [TextArea][SerializeField] protected string itemDescription;
 
+    // --------- Check item isn't picked up already ---------
+    private bool isPickingUp = false;
+
     // --------- Inventory Manager ---------
     protected InventoryManager inventoryManager;
 
@@ -30,15 +33,23 @@ public class Key : MonoBehaviour
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
     }
 
+    private IEnumerator ResetPickupBool()
+    {
+        yield return new WaitForSeconds(0.1f); 
+        isPickingUp = false;
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         Debug.Log("Trigger");
         if (collision.gameObject.CompareTag("Player")) // set player to player tag
         {
             Debug.Log("Press _ to pick up + itenName");
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButtonDown("Fire1") && !isPickingUp)
             {
-                int leftoverItems = inventoryManager.AddItem(itemName, quantity, sprite, itemDescription);
+                isPickingUp = true;
+
+                int leftoverItems = inventoryManager.AddItem(itemName, this.quantity, sprite, itemDescription);
                 if(leftoverItems <= 0)
                 {
                     Destroy(gameObject);
@@ -47,6 +58,8 @@ public class Key : MonoBehaviour
                 {
                     quantity = leftoverItems;
                 }
+
+                StartCoroutine(ResetPickupBool());
             }
         }
         else

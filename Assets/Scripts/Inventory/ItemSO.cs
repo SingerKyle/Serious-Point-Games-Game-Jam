@@ -9,23 +9,48 @@ public class ItemSO : ScriptableObject
     public StatToChange statToChange = new StatToChange();
     public int amountToChange;
 
-    public void useItem()
+    public bool useItem()
     {
         switch (statToChange) 
         {
             case StatToChange.none:
-                break;
+                return true;
             case StatToChange.lightSource:
                 break;
             case StatToChange.key:
-                DoorUnlockAttempt();
-                break;
+                Debug.Log("useItem Enum");
+                bool usable = DoorUnlockAttempt();
+                return usable;
         }
+
+        return true; // change when extra functionality is added
     }
 
-    protected void DoorUnlockAttempt()
+    protected bool DoorUnlockAttempt()
     {
+        Debug.Log("DoorUnlockAttempt");
+        // Find the player by tag
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return false;
 
+        // Get the player's collider
+        Collider2D playerCollider = player.GetComponent<CircleCollider2D>();
+        if (playerCollider == null) return false;
+
+        // Check for doors within the player's collider
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(playerCollider.transform.position, playerCollider.bounds.extents.x);
+        foreach (var collider in colliders)
+        {
+            if (collider.CompareTag("Door"))
+            {
+                Door door = collider.GetComponent<Door>();
+                if (door != null && door.GetLocked())
+                {
+                    return door.Unlock();
+                }
+            }
+        }
+        return false;
     }
 
     // for any potential healing items etc

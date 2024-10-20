@@ -32,15 +32,20 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void UseItem(string itemName)
+    public bool UseItem(string itemName)
     {
         for (int i = 0; i  < itemSOs.Length; i++) 
         {
             if (itemSOs[i].itemName == itemName)
             {
-                itemSOs[i].useItem();
+                Debug.Log("Item Usable in Manager");
+                bool usable = itemSOs[i].useItem();
+                return usable;
             }
+            return false;
         }
+
+        return false;
     }
 
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)

@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Animator found and assigned successfully.");
+            //Debug.Log("Animator found and assigned successfully.");
         }
 
         GameManager.instance.PlaySFX(BackgroundAmbience);
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         // Check if oxygen is zero (placeholder for death)
         if (oxygenSystem.GetCurrentOxygen() <= 0)
         {
-            Debug.Log("Player has drowned!");
+            //Debug.Log("Player has drowned!");
             RespawnPlayer();  // Respawn player at (0, 0) when drowned
             // Placeholder for future death mechanic
         }
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Animator is null!");
+            //Debug.LogError("Animator is null!");
         }
 
         if (m_horizontalInput < 0)
@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-        Debug.Log($"Horizontal Input: {m_horizontalInput}");
+        //Debug.Log($"Horizontal Input: {m_horizontalInput}");
     }
 
     public void HandleDirectionalInput(Vector2 direction)
@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             m_isGrounded = false;
-            Debug.Log("Exiting the ground");
+            //Debug.Log("Exiting the ground");
         }
 
     }
@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
     private void RespawnPlayer()
     {
         // Log respawn action
-        Debug.Log("Player has drowned. Respawning...");
+        //Debug.Log("Player has drowned. Respawning...");
 
         // Reset player's position to (0, 0)
         transform.position = new Vector2(0, 0);

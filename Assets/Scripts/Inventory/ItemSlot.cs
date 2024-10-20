@@ -115,18 +115,25 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         if (thisItemIsSelected)
         {
-            inventoryManager.UseItem(itemName);
-            if (this.quantity > 0)
+            bool usable = inventoryManager.UseItem(itemName);
+            if (usable)
             {
-                this.quantity -= 1;
-                quantityText.text = this.quantity.ToString();
-            }
-            if (this.quantity <= 0)
-            {
-                RemoveItems();
-            }
+                if (this.quantity > 0)
+                {
+                    this.quantity -= 1;
+                    quantityText.text = this.quantity.ToString();
+                }
+                if (this.quantity <= 0)
+                {
+                    RemoveItems();
+                }
 
-            thisItemIsSelected = false;
+                thisItemIsSelected = false;
+            }
+            else
+            {
+                Debug.Log("Not Usable");
+            }
         }
         else
         {
