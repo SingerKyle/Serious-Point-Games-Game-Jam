@@ -8,10 +8,11 @@ public class InventoryManager : MonoBehaviour
     private bool menuActivated = false;
 
     public ItemSlot[] itemSlot;
+    public ItemSO[] itemSOs;
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") && menuActivated)
+        if (Input.GetButtonDown("Fire2") && menuActivated)
         {
             // Play Game
             Time.timeScale = 1f;
@@ -20,7 +21,7 @@ public class InventoryManager : MonoBehaviour
             menuActivated = false;
             return;
         }
-        else if (Input.GetButtonDown("Fire1") && !menuActivated)
+        else if (Input.GetButtonDown("Fire2") && !menuActivated)
         {
             // Pause Game
             Time.timeScale = 0f;
@@ -31,16 +32,42 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItem(string itemName, int quantity, Sprite itemSprite)
+    public void UseItem(string itemName)
+    {
+        for (int i = 0; i  < itemSOs.Length; i++) 
+        {
+            if (itemSOs[i].itemName == itemName)
+            {
+                itemSOs[i].useItem();
+            }
+        }
+    }
+
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
     {
         Debug.Log("item - " + itemName + " quantity - " +  quantity);
         for (int i = 0; i < itemSlot.Length; i++) 
         {
-            if (!itemSlot[i].isFull)
+            if (!itemSlot[i].isFull && itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0)
             {
-                itemSlot[i].addItem(itemName, quantity, itemSprite);
-                return;
+                int leftoverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription);
+                if (leftoverItems > 0) 
+                {
+                    leftoverItems = AddItem(itemName, leftoverItems, itemSprite, itemDescription);
+                }
+
+                return leftoverItems;
             }
+        }
+        return quantity;
+    }
+
+    public void DeselectAllSlots()
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            itemSlot[i].selectedBox.SetActive(false);
+            itemSlot[i].thisItemIsSelected = false;
         }
     }
 }

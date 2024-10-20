@@ -20,10 +20,17 @@ public class Key : InteractableItems
         if (collision.gameObject.CompareTag("Player")) // set player to player tag
         {
             Debug.Log("Press _ to pick up + itenName");
-            if (Input.GetButton("Fire2"))
+            if (Input.GetButton("Fire1"))
             {
-                inventoryManager.AddItem(itemName, quantity, sprite);
-                Destroy(gameObject);
+                int leftoverItems = inventoryManager.AddItem(itemName, quantity, sprite, itemDescription);
+                if(leftoverItems <= 0)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    quantity = leftoverItems;
+                }
             }
         }
         else
