@@ -186,7 +186,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.1635688, y: 0.012278438}
+  m_Offset: {x: 0.03257066, y: 0.009083301}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -196,7 +196,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.47713757, y: 1.0178506}
+  m_Size: {x: 0.73913383, y: 1.024241}
   m_EdgeRadius: 0
 --- !u!95 &7613109282692962301
 Animator:
@@ -357,11 +357,11 @@ MonoBehaviour:
   spotlight: {fileID: 1570998095690223526}
   lightIntensity: 1
   lightRange: 5
-  intensityChangeSpeed: 0.1
+  intensityChangeSpeed: 0.2
   lightOffset: 0.5
-  candleTime: 50
-  candleDrainRate: 2.5
-  candleDimThreshhold: 25
+  candleTime: 100
+  candleDrainRate: 3
+  candleDimThreshhold: 30
   shouldCandleDecay: 1
 --- !u!1 &8281946624484010926
 GameObject:
