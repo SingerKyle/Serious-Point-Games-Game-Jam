@@ -1,58 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-
-// -------------------------------- Mechanics--------------------------------------
-// Oxygen Meter - remove and add over time
-// swim bool
-// 
-//
-// --------------------------------------------------------------------------------
 
 public class PlayerController : MonoBehaviour
 {
-    // Variables for editor adjustment
-    //SerializeField] float m_jumpForce = 400f;
     [SerializeField] float m_movementSpeed = 20f;
     [SerializeField] float m_swimmingSpeed = 20f;
     [SerializeField] float waterGravityScale = 1;
     [SerializeField] float gravityScale = 9;
-    [SerializeField] private float tiltAngle = 5f;  // Angle to tilt forward during movement
-    [SerializeField] float jumpForce = 500f;         // Jump force applied to player
-
+    [SerializeField] private float tiltAngle = 5f;
+    [SerializeField] float jumpForce = 500f;
 
     [SerializeField] public float waterDragFactor = 0.2f;
     [SerializeField] public float buoyancyForce = 0.1f;
     [SerializeField] public float impulseFactor = 0.1f;
 
-    // Reference to Oxygen System
     [SerializeField] private OxygenSystem oxygenSystem;
-
     [Range(0, .3f)][SerializeField] private float m_movementSmooth = 0.125f;
 
-
-    // Movement Direction Variables
     private Vector2 inputDirection = Vector2.zero;
     float m_horizontalInput;
     float m_verticalInput;
     Vector2 m_moveDirection;
     Vector2 m_currentVelocity = Vector2.zero;
 
-    // Audio clips for different player actions
     [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip footstepSound;
     [SerializeField] private AudioClip swimSound;
     [SerializeField] private AudioClip drownSound;
     [SerializeField] private List<AudioClip> BackgroundAmbience;
 
-    // Animator reference
     private Animator animator;
 
+    private AudioSource ambientAudioSource;
+    private AudioSource footstepsAudioSource;
+    private AudioSource jumpAudioSource;
+    private AudioSource swimAudioSource;
+    private AudioSource drownAudioSource;
+
     bool m_isSwimming;
-
     bool m_isGrounded;
+    bool isPlayingFootsteps = false;
+    bool isPlayingSwimSound = false;
+    bool hasPlayedDrownSound = false;
+    bool hasJumped = false;
 
-    // Physics Body
     public Rigidbody2D rb;
 
     public bool GetGrounded()
@@ -60,32 +52,37 @@ public class PlayerController : MonoBehaviour
         return m_isGrounded;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Check and assign the Animator
         animator = GetComponent<Animator>();
 
-        if (animator == null)
+        // Dynamically assign each Audio Source
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        if (audioSources.Length >= 5)
         {
-            Debug.LogError("Animator component not found on the player object!");  // Error message if the Animator is not found
+            ambientAudioSource = audioSources[0];  // Ambient audio
+            footstepsAudioSource = audioSources[1];  // Footsteps
+            jumpAudioSource = audioSources[2];  // Jump
+            swimAudioSource = audioSources[3];  // Swim
+            drownAudioSource = audioSources[4];  // Drowning
         }
         else
         {
-            //Debug.Log("Animator found and assigned successfully.");
+            Debug.LogError("Not enough AudioSources attached to Player!");
         }
 
+        // Play ambient sound
         if (BackgroundAmbience.Count > 0)
         {
             int randomIndex = Random.Range(0, BackgroundAmbience.Count);
-            GameManager.instance.PlaySFX(BackgroundAmbience[randomIndex]);
+            ambientAudioSource.clip = BackgroundAmbience[randomIndex];
+            ambientAudioSource.loop = true;
+            ambientAudioSource.Play();
         }
 
         rb = GetComponent<Rigidbody2D>();
         m_isGrounded = true;
         m_isSwimming = false;
-
-        // Lock the player's rotation to prevent flipping
         rb.freezeRotation = true;
 
         if (oxygenSystem == null)
@@ -94,135 +91,130 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector2 moveDirection = inputDirection.normalized;
         PlayerInput();
-        ApplyTilt();  // Apply tilt in direction of movement
+        ApplyTilt();
 
-        if (m_isSwimming)
+        // Handle swimming sound
+        if (m_isSwimming && oxygenSystem.GetCurrentOxygen() > 0)
         {
-            oxygenSystem.DrainOxygen(); // Drain oxygen while swimming
+            oxygenSystem.DrainOxygen();
+            if (!isPlayingSwimSound)
+            {
+               
+                swimAudioSource.clip = swimSound;
+                swimAudioSource.Play();
+                isPlayingSwimSound = true;
+            }
         }
         else
         {
-            oxygenSystem.RefillOxygen(); // Refill oxygen when out of water
+            StopSound(swimAudioSource);  // Stop swim sound when leaving water
+            isPlayingSwimSound = false;
+            oxygenSystem.RefillOxygen();
         }
-    
+        Debug.Log(oxygenSystem.GetCurrentOxygen());
 
-        // Check if oxygen is zero (placeholder for death)
+        // Oxygen threshold for drowning sound (20% of max oxygen)
+        float oxygenThreshold = oxygenSystem.GetMaxOxygen() * 0.2f;
+
+        // Handle drowning sound when oxygen is 20% or lower
+        if (oxygenSystem.GetCurrentOxygen() <= oxygenThreshold && oxygenSystem.GetCurrentOxygen() > 0 && !hasPlayedDrownSound)
+        {
+            StopSound(swimAudioSource);  // Stop swim sound
+            drownAudioSource.PlayOneShot(drownSound);  // Play drowning sound once
+            hasPlayedDrownSound = true;
+        }
+
+        // If oxygen is replenished above 20%, reset drowning sound flag
+        if (oxygenSystem.GetCurrentOxygen() > oxygenThreshold)
+        {
+            hasPlayedDrownSound = false;  // Reset for the next time oxygen falls below 20%
+        }
+
+        // Handle oxygen depletion and player respawn
         if (oxygenSystem.GetCurrentOxygen() <= 0)
         {
-            //Debug.Log("Player has drowned!");
-            RespawnPlayer();  // Respawn player at (0, 0) when drowned
-            // Placeholder for future death mechanic
-        }
-        // Update animator parameters
-        if (animator != null)
-        {
-            animator.SetFloat("Speed", Mathf.Abs(m_horizontalInput));  // Line 101
-        }
-        else
-        {
-            //Debug.LogError("Animator is null!");
+            Debug.Log("Oxygen depleted, respawning player.");
+            StopSound(swimAudioSource);  // Stop swim sound
+            RespawnPlayer();
         }
 
-        if (m_horizontalInput < 0)
-        {
-            transform.localScale = new Vector3(2, 2, 1);
-        }
-        else if (m_horizontalInput > 0)
-        {
-            transform.localScale = new Vector3(-2, 2, 1);
-        }
+        UpdateAnimator();
+        HandleFootsteps();  // Handle footsteps sound
     }
-
 
     private void FixedUpdate()
     {
-        // Use this function for physics calculations Mikey :)
         MovePlayer();
 
         if (m_isGrounded && !m_isSwimming)
         {
-            //change player move speed,dis allow y axis movement, change gravity effect
-            rb.gravityScale = gravityScale; // Default gravity
+            rb.gravityScale = gravityScale;
         }
         else if (m_isSwimming)
         {
             ApplyUnderwaterMovement(m_moveDirection);
-            //change player move speed, allow y axis movement, change gravity effect
-            rb.gravityScale = waterGravityScale; // No gravity when swimming
+            rb.gravityScale = waterGravityScale;
         }
         else
         {
             rb.gravityScale = gravityScale;
         }
-        //Debug.Log(oxygenSystem.GetCurrentOxygen());
-
     }
 
     private void PlayerInput()
     {
-        // Get input from key presses
         m_horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if(m_isSwimming)
+        if (m_isSwimming)
         {
             m_verticalInput = Input.GetAxisRaw("Vertical");
-            //Debug.Log(m_verticalInput);
         }
         else
         {
-            m_verticalInput= 0f;
+            m_verticalInput = 0f;
         }
-        
-        // Calculate Movement Direction
+
         m_moveDirection = new Vector2(m_horizontalInput, m_verticalInput).normalized;
 
-        if (m_isGrounded && Input.GetButtonDown("Jump"))
+        if (m_isGrounded && Input.GetButtonDown("Jump") && !hasJumped)
         {
+            //Debug.Log("Jump pressed, playing jump sound.");
             Jump();
+            hasJumped = true;
         }
-        //Debug.Log($"Horizontal Input: {m_horizontalInput}");
-    }
-
-    public void HandleDirectionalInput(Vector2 direction)
-    {
-        inputDirection = direction;
+        else if (m_isGrounded)
+        {
+            hasJumped = false;  // Reset jump flag when grounded
+        }
     }
 
     void MovePlayer()
     {
-        
-        // use different speed when the player is in the water versus out of it
         float currentSpeed = m_isSwimming ? m_swimmingSpeed : m_movementSpeed;
-
-        // Calculate the target velocity
         Vector2 targetVelocity = m_moveDirection * currentSpeed;
         rb.velocity = Vector2.SmoothDamp(rb.velocity, targetVelocity, ref m_currentVelocity, m_movementSmooth);
-        
     }
 
     private void Jump()
     {
-        // Apply upward force to jump
-        rb.AddForce(new Vector2(rb.velocityX, jumpForce));
+        //Debug.Log("Executing Jump.");
+        rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
         animator.SetTrigger("Jump!");
-        //Debug.Log("Jumping!");
+        jumpAudioSource.PlayOneShot(jumpSound);  // Play jump sound once
+       // Debug.Log("Jump sound played.");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            //Debug.Log("We've hit dry captain");
             m_isGrounded = true;
             animator.SetBool("isGrounded", m_isGrounded);
-            //m_isSwimming = false;
+           // Debug.Log("Player is grounded.");
         }
-
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -234,11 +226,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
-    { 
-        if(collider.gameObject.CompareTag("Water"))
+    {
+        if (collider.CompareTag("Water"))
         {
-            //Debug.Log("Entering the water");
-            //m_isGrounded = false;
+           // Debug.Log("Entering water, starting swimming.");
             m_isSwimming = true;
             animator.SetBool("isSwimming", m_isSwimming);
         }
@@ -250,66 +241,104 @@ public class PlayerController : MonoBehaviour
         {
             m_isGrounded = false;
             animator.SetBool("isGrounded", m_isGrounded);
-            //Debug.Log("Exiting the ground");
+           // Debug.Log("Player left the ground.");
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collider)
-    { 
-        if(collider.gameObject.CompareTag("Water"))
+    {
+        if (collider.CompareTag("Water"))
         {
+           // Debug.Log("Exiting water, stopping swimming.");
             m_isSwimming = false;
             animator.SetBool("isSwimming", m_isSwimming);
-            //Debug.Log("Exiting the water");
+            
         }
     }
+
     private void ApplyTilt()
     {
-        // Apply a forward lean based on horizontal movement direction
         if (m_horizontalInput != 0)
         {
-            // Calculate the tilt angle based on direction of movement
             float tilt = -m_horizontalInput * tiltAngle;
-
-            // Create a new rotation keeping the player upright but tilted slightly forward or backward
             transform.rotation = Quaternion.Euler(0f, 0f, tilt);
         }
         else
         {
-            // Reset rotation when there is no movement
             transform.rotation = Quaternion.identity;
         }
     }
-    private void DrainOxygen()
+
+    private void PlaySound(AudioSource source, AudioClip clip, bool loop = false)
     {
-        // Drain oxygen while in water
-        oxygenSystem.DrainOxygen();  // Call DrainOxygen without arguments
+        if (source != null && clip != null)
+        {
+            source.clip = clip;
+            source.loop = loop;
+            source.Play();
+        }
     }
 
-    private void RefillOxygen()
+    private void StopSound(AudioSource source)
     {
-        // Refill oxygen when out of water
-        oxygenSystem.RefillOxygen();
+        if (source != null && source.isPlaying)
+        {
+            source.Stop();
+        }
     }
-    private void ApplyUnderwaterMovement(Vector2 direction)
-    {
-        // Apply force based on direction with some impulse to simulate water resistance
-        Vector2 movementForce = direction * m_currentVelocity * (0.01f + impulseFactor);
-        movementForce.y += buoyancyForce;
 
-        rb.AddForce(movementForce, ForceMode2D.Force);
+    private void HandleFootsteps()
+    {
+        // Debugging logic for footsteps
+       // Debug.Log($"HandleFootsteps: m_horizontalInput: {m_horizontalInput}, m_isGrounded: {m_isGrounded}, isPlayingFootsteps: {isPlayingFootsteps}, m_isSwimming: {m_isSwimming}");
+
+        // Play footsteps only when grounded, moving, not swimming, and not jumping
+        if (m_horizontalInput != 0 && m_isGrounded && !isPlayingFootsteps && !m_isSwimming && !Input.GetButton("Jump"))
+        {
+           // Debug.Log("Playing footsteps.");
+            footstepsAudioSource.clip = footstepSound;
+            footstepsAudioSource.Play();  // Play footsteps sound
+            isPlayingFootsteps = true;
+        }
+        else if (m_horizontalInput == 0 || !m_isGrounded || m_isSwimming || Input.GetButton("Jump"))
+        {
+            if (isPlayingFootsteps)
+            {
+               // Debug.Log("Stopping footsteps.");
+                footstepsAudioSource.Stop();  // Stop footsteps
+                isPlayingFootsteps = false;
+            }
+        }
+    }
+
+    private void UpdateAnimator()
+    {
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(m_horizontalInput));
+
+            // Flip sprite based on direction
+            if (m_horizontalInput < 0)
+            {
+                transform.localScale = new Vector3(2, 2, 1); // Flip left
+            }
+            else if (m_horizontalInput > 0)
+            {
+                transform.localScale = new Vector3(-2, 2, 1); // Flip right
+            }
+        }
     }
 
     private void RespawnPlayer()
     {
-        // Log respawn action
-        //Debug.Log("Player has drowned. Respawning...");
+        transform.position = new Vector2(8.64f, -2.54f);
+        oxygenSystem.Start();  // Reset oxygen after respawn
+    }
 
-        // Reset player's position to (0, 0)
-        transform.position = new Vector2(0, 0);
-
-        // Optional: Reset the oxygen to full after respawn
-        oxygenSystem.Start(); // Reinitialize oxygen
+    private void ApplyUnderwaterMovement(Vector2 direction)
+    {
+        Vector2 movementForce = direction * m_currentVelocity * (0.01f + impulseFactor);
+        movementForce.y += buoyancyForce;
+        rb.AddForce(movementForce, ForceMode2D.Force);
     }
 }

@@ -40,13 +40,13 @@ public class Key : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Trigger");
+      //  Debug.Log("Trigger");
 
         
 
         if (collision.gameObject.CompareTag("Player")) // set player to player tag
         {
-            Debug.Log("Press _ to pick up + itenName");
+           // Debug.Log("Press _ to pick up + itenName");
             if (Input.GetButton("Interact") && !isPickingUp)
             {
                 isPickingUp = true;
@@ -66,7 +66,7 @@ public class Key : MonoBehaviour
         }
         else
         {
-            Debug.Log("Nothing");
+            //Debug.Log("Nothing");
         }
     }
 }

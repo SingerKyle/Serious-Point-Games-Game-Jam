@@ -6,11 +6,8 @@ using System.Reflection;
 using System;
 
 #if UNITY_EDITOR
-
 [ExecuteInEditMode]
 #endif
-
-
 
 public class ResizeQuadEffectController : MonoBehaviour
 {
@@ -23,10 +20,8 @@ public class ResizeQuadEffectController : MonoBehaviour
     Camera effectCam;
     RenderTexture backTex2d;
 
-
     GameObject effectCamera;
     GameObject backgroundCamera;
-
 
     float minX, minY, maxX, maxY = 0f;
     float lminX, lminY, lmaxX, lmaxY = 0f;
@@ -35,16 +30,14 @@ public class ResizeQuadEffectController : MonoBehaviour
     Vector3 screenInitPosInWorld;
     Vector3 screenFinalPosInWorld;
 
-    [SerializeField]int sampleSize = 0;
+    [SerializeField] int sampleSize = 0;
 
     public static void setMinMaxParticlePosition(Vector2 _pos, float radius)
     {
-
         if (instance == null)
+        {
             RebuildTextures();
-
-
-       
+        }
 
         if (_pos.x < instance.minX) instance.minX = _pos.x;
         if (_pos.y < instance.minY) instance.minY = _pos.y;
@@ -61,11 +54,7 @@ public class ResizeQuadEffectController : MonoBehaviour
             instance.lmaxY = instance.maxY;
 
             instance.radius = radius;
-
-
-            
         }
- 
     }
 
     int getSampleSize(int sampleID)
@@ -75,32 +64,24 @@ public class ResizeQuadEffectController : MonoBehaviour
 
         for (int i = 0; i < sampleID; i++)
         {
-            r *= 2; 
+            r *= 2;
         }
 
         return r;
     }
-    
-    void LoadSampleSize() {
+
+    void LoadSampleSize()
+    {
 #if UNITY_EDITOR
         int sampleID = UnityEditor.EditorPrefs.GetInt("SampleID") >= 0 ? UnityEditor.EditorPrefs.GetInt("SampleID") : 2;
-        sampleSize = getSampleSize(sampleID);        
+        sampleSize = getSampleSize(sampleID);
 #endif
     }
 
-    
-
     public static void RebuildTextures(int flipTex = -1)
     {
-
-        //flipTex -1 dont update
-        //flipTex 0 dont flip
-        //flipTex 1  flip
-
-
         if (instance == null)
         {
-
             ResizeQuadEffectController[] aux = FindObjectsOfType<ResizeQuadEffectController>();
             if (aux.Length > 1)
             {
@@ -109,10 +90,9 @@ public class ResizeQuadEffectController : MonoBehaviour
                     DestroyImmediate(aux[i].gameObject);
                 }
             }
-                
-            if(aux.Length > 0)
+
+            if (aux.Length > 0)
                 instance = aux[0].GetComponent<ResizeQuadEffectController>();
-           
         }
 
         if (flipTex == 0)
@@ -136,78 +116,83 @@ public class ResizeQuadEffectController : MonoBehaviour
         //screenFinalPosInWorld = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
     }
 
-
-
-
     Camera cam;
     Vector3 pos;
     Vector3 size;
 
     private void Start()
-
     {
-
         RebuildRenderTexturesAll();
 
         gameObject.transform.hideFlags = HideFlags.HideInInspector;
 
         if (effectCamera == null)
-            effectCamera = gameObject.transform.parent.gameObject;
+            effectCamera = gameObject.transform.parent != null ? gameObject.transform.parent.gameObject : null;
+
+        if (effectCamera == null)
+        {
+            Debug.LogError("effectCamera is not set or could not be found.");
+            return;
+        }
 
         cam = effectCamera.GetComponent<Camera>();
 
         pos = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
         size = cam.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, cam.nearClipPlane));
-
     }
-
 
     void Update()
     {
+        if (effectCamera == null)
+        {
+            effectCamera = gameObject.transform.parent != null ? gameObject.transform.parent.gameObject : null;
+
+            if (effectCamera == null)
+            {
+                Debug.LogError("effectCamera is not set or could not be found.");
+                return;
+            }
+        }
+
         if (effectCamera.GetComponent<Camera>().targetTexture == null)
         {
             RebuildRenderTexturesAll();
         }
 
         resetMinMax();
-        if (instance != null) instance.RebuildMesh();
 
+        if (instance != null)
+        {
+            instance.RebuildMesh();
+        }
     }
 
-    private void resetMinMax() {
-
-      
-        minY= minX = Mathf.Infinity;
+    private void resetMinMax()
+    {
+        minY = minX = Mathf.Infinity;
         maxY = maxX = -Mathf.Infinity;
-        
-        
     }
 
     private Vector3[] _meshVertices;
-    Mesh mesh; // GetComponent<MeshFilter>().sharedMesh;
+    Mesh mesh;
     MeshFilter mf;
     Vector3 p1, p2, p3, p4;
+
     private void RebuildMesh()
     {
-        if (mesh == null) {
+        if (mesh == null)
+        {
             mesh = new Mesh();
         }
 
         mesh.Clear();
 
-            
-
-
-        //if (_meshVertices == null)
-         //   _meshVertices = mesh.vertices;
-
         var vertices = new Vector3[4];
 
-        
         p1 = transform.InverseTransformPoint(new Vector3(cullingRect.x, cullingRect.y));
         p2 = transform.InverseTransformPoint(new Vector3(cullingRect.x, cullingRect.height));
         p3 = transform.InverseTransformPoint(new Vector3(cullingRect.width, cullingRect.height));
-        p4 = transform.InverseTransformPoint(new Vector3(cullingRect.width, cullingRect.y ));
+        p4 = transform.InverseTransformPoint(new Vector3(cullingRect.width, cullingRect.y));
 
         p1.x -= radius;
         p1.y -= radius;
@@ -221,68 +206,39 @@ public class ResizeQuadEffectController : MonoBehaviour
         p4.x += radius;
         p4.y -= radius;
 
-
-
-
         if (effectCamera == null)
         {
-            effectCamera = gameObject.transform.parent.gameObject;
+            effectCamera = gameObject.transform.parent != null ? gameObject.transform.parent.gameObject : null;
             cam = effectCamera.GetComponent<Camera>();
         }
 
         pos = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
         size = cam.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, cam.nearClipPlane));
 
-
-        //print(size);
-
-
-        
         if (p1.x < pos.x) p1.x = pos.x;
         if (p1.x > size.x) p1.x = size.x;
         if (p1.y < pos.y) p1.y = pos.y;
 
         if (p2.x < pos.x) p2.x = pos.x;
         if (p2.x > size.x) p2.x = size.x;
-        if (p2.y > size.y ) p2.y = size.y;
-        
+        if (p2.y > size.y) p2.y = size.y;
+
         if (p3.x > size.x) p3.x = size.x;
-        if (p3.y > size.y) p3.y =  size.y;
+        if (p3.y > size.y) p3.y = size.y;
 
         if (p4.x > size.x) p4.x = size.x;
         if (p4.y < pos.y) p4.y = pos.y;
-        if (p4.x > size.x) p4.x = size.x;
 
-
-
-       
-
-
-        Vector3 vertex = vertices[0];
-        vertex.x = p1.x;
-        vertex.y = p1.y;
-        vertices[0] = vertex;
-
-        vertex = vertices[1];
-        vertex.x = p2.x;
-        vertex.y = p2.y;
-        vertices[1] = vertex;
-
-        vertex = vertices[2];
-        vertex.x = p3.x;
-        vertex.y = p3.y;
-        vertices[2] = vertex;
-
-        vertex = vertices[3];
-        vertex.x = p4.x;
-        vertex.y = p4.y;
-        vertices[3] = vertex;
+        vertices[0] = p1;
+        vertices[1] = p2;
+        vertices[2] = p3;
+        vertices[3] = p4;
 
         mesh.vertices = vertices;
-        mesh.triangles = new int[]{ 0, 1, 2, 2, 3, 0 };
+        mesh.triangles = new int[] { 0, 1, 2, 2, 3, 0 };
         mesh.RecalculateBounds();
 
-        if(mf == null) mf = GetComponent<MeshFilter>();
+        if (mf == null) mf = GetComponent<MeshFilter>();
         mf.mesh = mesh;
 
         transform.position = new Vector3(0, 0, 10f);
@@ -290,7 +246,7 @@ public class ResizeQuadEffectController : MonoBehaviour
     }
 
     public void AboutToRebuildAll()
-    {// called when playing/stop is coming
+    {
         effectCamera.GetComponent<Camera>().targetTexture = null;
     }
 
@@ -300,31 +256,37 @@ public class ResizeQuadEffectController : MonoBehaviour
         LoadSampleSize(); // read from unity prefs
 #endif
 
-        if (sampleSize <= 0) {
+        if (sampleSize <= 0)
+        {
             Debug.LogError("Sample tex is size 0");
             return;
         }
 
+        if (effectCamera == null)
+        {
+            effectCamera = gameObject.transform.parent != null ? gameObject.transform.parent.gameObject : null;
 
-        //print(sampleSize);
+            if (effectCamera == null)
+            {
+                Debug.LogError("effectCamera is not set or could not be found.");
+                return;
+            }
+        }
 
         float size = sampleSize;
         float ratio;
         int width, height;
-        
+
         ratio = (float)Camera.main.pixelHeight / (float)Camera.main.pixelWidth;
 
         width = (int)(size);
         height = (int)(size * ratio);
 
-        
-
-        effectCamera = gameObject.transform.parent.gameObject;
-
         if (gameObject.transform.parent.parent.Find("0-BGCamera"))
+        {
             backgroundCamera = gameObject.transform.parent.parent.Find("0-BGCamera").gameObject;
-        
-        // Only for toon style
+        }
+
         if (backgroundCamera != null)
         {
             RenderTexture BackgroundRT = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
@@ -333,14 +295,9 @@ public class ResizeQuadEffectController : MonoBehaviour
             backgroundCamera.GetComponent<Camera>().targetTexture = BackgroundRT;
         }
 
-
-        //CREATING AND ADDING RT
         RenderTexture EffectRT = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
-       
-        //For Regular shader
-        GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_MainTex", EffectRT);
 
-        //For Toon Shader
+        GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_MainTex", EffectRT);
         GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_EffectTex", EffectRT);
 
         effectCamera.GetComponent<Camera>().forceIntoRenderTexture = true;
@@ -359,38 +316,33 @@ public class ResizeQuadEffectController : MonoBehaviour
         }
 #endif
 
-
-
-
 #if UNITY_EDITOR
         FlipTexture = UnityEditor.EditorPrefs.GetBool("_flipTexEditor");
-        //print(FlipTexture);
 
         if (FlipTexture && (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor))
-
+        {
             GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_FlipTex", 1.0f);
-
+        }
         else
+        {
             GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_FlipTex", 0.0f);
-
+        }
 #endif
 
 #if !UNITY_EDITOR
         if (FlipTexture && (Application.platform == RuntimePlatform.WindowsPlayer))
-
+        {
             GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_FlipTex", 1.0f);
-
+        }
         else
+        {
             GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_FlipTex", 0.0f);
+        }
 #endif
-
-
     }
 
     public void SetSorting(int id = 0)
     {
         GetComponent<MeshRenderer>().sortingOrder = id;
     }
-
-
 }

@@ -96,7 +96,7 @@ public class PlayerLighting : MonoBehaviour
         // Decrease based on frame rate.
         currentCandleTime -= Mathf.Clamp(candleDrainRate * Time.fixedDeltaTime, 0, candleTime);
 
-        Debug.Log("Candle Num - " + currentCandleTime);
+        //Debug.Log("Candle Num - " + currentCandleTime);
 
         if (currentCandleTime <= candleDimThreshhold) 
         {

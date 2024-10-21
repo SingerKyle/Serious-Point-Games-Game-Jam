@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-
 [ExecuteInEditMode]
 public class MetaballParticleClass : MonoBehaviour
 {
-
-
     public GameObject MObject;
     public float LifeTime;
     public Water2D.Water2D_Spawner SpawnerParent;
+
     public bool Active
     {
         get { return _active; }
@@ -21,10 +19,12 @@ public class MetaballParticleClass : MonoBehaviour
             if (MObject)
             {
                 MObject.SetActive(value);
-
                 if (tr)
                     tr.Clear();
-
+            }
+            else
+            {
+                Debug.LogWarning("MObject is not assigned.");
             }
 
             if (value)
@@ -38,9 +38,11 @@ public class MetaballParticleClass : MonoBehaviour
 
             if (!value)
             {
-                //substrac 1 unit of particle using.
-                if(SpawnerParent)
+                // Subtract 1 unit of particle usage.
+                if (SpawnerParent)
                     SpawnerParent.DropsUsed--;
+                else
+                    Debug.LogWarning("SpawnerParent is not assigned.");
 
                 if (rb != null) // reset speed simulation in Editor
                     rb.velocity *= 0f;
@@ -51,69 +53,36 @@ public class MetaballParticleClass : MonoBehaviour
                     rb.sharedMaterial = null;
                     _isFreeze = false;
                 }
-                   
 
                 delta *= 0;
-
             }
             ScaleDownIsPerforming = false;
-
         }
     }
-    public bool witinTarget;
 
+    public bool witinTarget;
     public Vector2 Editor_Velocity; // velocity used within editor simulation
     public Vector2 Velocity_Limiter_X; // Limiter of speed in X in simulation
-    public Vector2 Velocity_Limiter_Y; // Limiter of speed in X in simulation
+    public Vector2 Velocity_Limiter_Y; // Limiter of speed in Y in simulation
 
     public bool ScaleDown = false;
     public float endSize = 0f;
     public bool BlendingColor;
     public SpriteRenderer glowSP;
 
-
-    public void SetColor(Color _color)
-    {
-        sr.color = _color;
-    }
-
-    public void SetFreeze(bool _val = true)
-    {
-        _isFreeze = _val;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-       //rb.gravityScale = .5f;
-    }
-
-    public bool GetFreeze()
-    { return _isFreeze; }
-
-    public void SetHighDensity(bool _val = true)
-    {
-        _isFreeze = _val;
-        //rb.drag = 25f;
-        rb.angularDrag = 25f;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-    }
-
-    public void removeGlow()
-    {
-        glowSP.enabled = false;
-    }
-
-    bool _active;
-    bool _isFreeze;
-    float delta;
-    Rigidbody2D rb;
-    CircleCollider2D cc;
-    TrailRenderer tr;
-    SpriteRenderer sr;
-    Collider2D[] Contacts;
-    float deltaSimul;
-    float fixedDeltaSimul = 0f;
-    float wakeUpTime;
+    private bool _active;
+    private bool _isFreeze;
+    private float delta;
+    private Rigidbody2D rb;
+    private CircleCollider2D cc;
+    private TrailRenderer tr;
+    private SpriteRenderer sr;
+    private Collider2D[] Contacts;
+    private float deltaSimul;
+    private float fixedDeltaSimul = 0f;
+    private float wakeUpTime;
 
 #if UNITY_EDITOR
-
     private void OnEnable()
     {
         EditorApplication.update += Update;
@@ -123,52 +92,48 @@ public class MetaballParticleClass : MonoBehaviour
     {
         EditorApplication.update -= Update;
     }
-
 #endif
 
     void Start()
     {
-        //MObject = gameObject;
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
         cc = GetComponent<CircleCollider2D>();
-        sr = GetComponent <SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
 
         Contacts = new Collider2D[4];
+
+        if (rb == null) Debug.LogError("Rigidbody2D is missing.");
+        if (cc == null) Debug.LogError("CircleCollider2D is missing.");
+        if (sr == null) Debug.LogError("SpriteRenderer is missing.");
     }
 
     void Update()
     {
-
-       
-
         if (Active == true)
         {
-            // cache the spriterender component
-            if (SpawnerParent.GlowEffect && glowSP == null)
+            // Cache the sprite renderer component
+            if (SpawnerParent?.GlowEffect == true && glowSP == null)
             {
-                Transform t = MObject.transform.Find("_glow");
-                if(t != null)
+                Transform t = MObject?.transform.Find("_glow");
+                if (t != null)
                     glowSP = t.GetComponent<SpriteRenderer>();
+                else
+                    Debug.LogWarning("Glow object not found.");
             }
 
-            if(sr != null)
-                if(sr.isVisible)
-                    ResizeQuadEffectController.setMinMaxParticlePosition(transform.position, transform.localScale.x*.12f);
-
-
+            if (sr != null && sr.isVisible)
+                ResizeQuadEffectController.setMinMaxParticlePosition(transform.position, transform.localScale.x * 0.12f);
 
             if (ScaleDown)
                 ScaleItDown();
 
             VelocityLimiter();
 
-            if (BlendingColor) {
-               
+            if (BlendingColor)
                 Blend();
-            }
 
-            if(SpawnerParent.Water2DEmissionType == Water2D.Water2D_Spawner.EmissionType.FillerCollider)
+            if (SpawnerParent?.Water2DEmissionType == Water2D.Water2D_Spawner.EmissionType.FillerCollider)
                 return;
 
             if (LifeTime < 0)
@@ -184,9 +149,7 @@ public class MetaballParticleClass : MonoBehaviour
                 delta += Time.deltaTime;
             }
 
-
-
-            // Handle collisions in fixedtime only editor
+            // Handle collisions in fixed time only in the editor
             if (deltaSimul > fixedDeltaSimul)
             {
                 deltaSimul *= 0;
@@ -196,22 +159,7 @@ public class MetaballParticleClass : MonoBehaviour
             {
                 deltaSimul += Time.deltaTime;
             }
-
-           
-
         }
-
-    }
-
-    Vector3 pos_aux;
-    void AnimInEditor()
-    {
-        Editor_Velocity += Physics2D.gravity * .0001f;
-       // VelocityLimiterEditor();
-        pos_aux = transform.position;
-        pos_aux = (Vector2)pos_aux + Editor_Velocity;
-        transform.position = pos_aux;
-        //print(Time.deltaTime);
     }
 
     void VelocityLimiter()
@@ -220,255 +168,121 @@ public class MetaballParticleClass : MonoBehaviour
             return;
 
         Vector2 _vel = rb.velocity;
-        _vel = rb.velocity;
 
         if (_vel.x < Velocity_Limiter_X.x)
-        {
             _vel.x = Velocity_Limiter_X.x;
-        }
-
         if (_vel.x > Velocity_Limiter_X.y)
-        {
             _vel.x = Velocity_Limiter_X.y;
-        }
-
         if (_vel.y < Velocity_Limiter_Y.x)
-        {
             _vel.y = Velocity_Limiter_Y.x;
-        }
-
         if (_vel.y > Velocity_Limiter_Y.y)
-        {
             _vel.y = Velocity_Limiter_Y.y;
-        }
 
         rb.velocity = _vel;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-
-        SpawnerParent.InvokeOnCollisionEnter2D(gameObject, collision.contacts[0].collider.gameObject);
+        if (SpawnerParent != null)
+            SpawnerParent.InvokeOnCollisionEnter2D(gameObject, collision.contacts[0].collider.gameObject);
+        else
+            Debug.LogWarning("SpawnerParent is not assigned.");
     }
-
-   // private void OnCollisionExit2D(Collision2D collision)
-   //{
-       // SpawnerParent.InvokeOnCollisionEnter2D(gameObject);
-   // }
 
     private void OnCollisionEnter2DEditor()
     {
-        if (Application.isPlaying)
+        if (Application.isPlaying || cc == null || Contacts == null)
             return;
 
-        if (cc == null)
-            return;
-
-        if (Contacts == null)
-            return;
-
-
-        int i = Physics2D.OverlapCircleNonAlloc(rb.position, cc.radius * .9f, Contacts);
-
+        int i = Physics2D.OverlapCircleNonAlloc(rb.position, cc.radius * 0.9f, Contacts);
         if (i > 0)
         {
             for (int j = 0; j < Contacts.Length; j++)
             {
-                if (Contacts[j] == null)
+                if (Contacts[j] == null || Contacts[j].GetInstanceID() == gameObject.GetInstanceID())
                     continue;
 
-                if (Contacts[j].GetInstanceID() == gameObject.GetInstanceID())
-                    continue;
-
-                SpawnerParent.InvokeOnCollisionEnter2D(gameObject, Contacts[j].gameObject);
+                SpawnerParent?.InvokeOnCollisionEnter2D(gameObject, Contacts[j].gameObject);
             }
-           
         }
-
-        
     }
 
     bool ScaleDownIsPerforming = false;
-    Vector2 deltaScale;
-    Vector2 initScale;
-    Vector2 tmpScale;
     void ScaleItDown()
     {
         // Initializes
-        if (!ScaleDownIsPerforming) {
+        if (!ScaleDownIsPerforming)
+        {
             ScaleDownIsPerforming = true;
         }
 
-        if(ScaleDownIsPerforming)
+        if (ScaleDownIsPerforming)
             ScaleDownPerform();
     }
+
     void ScaleDownPerform()
     {
-         transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(endSize, endSize), (delta /LifeTime) * Time.deltaTime * .8f );
-        //print(Time.deltaTime);
-        //elapsedTime += Time.deltaTime;
+        transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(endSize, endSize), (delta / LifeTime) * Time.deltaTime * 0.8f);
     }
-
-
-    int breathFrames = 6;
-    int framesCount = 0;
-
 
     void Blend()
     {
-        if (true)
+        if (cc == null || Contacts == null)
+            return;
+
+        int i = Physics2D.OverlapCircleNonAlloc(rb.position, cc.radius * 8f, Contacts, 1 << gameObject.layer);
+        if (i > 0)
         {
-           
-            if (cc == null)
-                return;
-
-            if (Contacts == null)
+            for (int j = 0; j < Contacts.Length; j++)
             {
-                Contacts = new Collider2D[2];
-            }
+                if (Contacts[j] == null || Contacts[j].tag != "Metaball_liquid")
+                    continue;
 
-            if(framesCount < breathFrames)
-            {
-                framesCount++;
-                return;
-            }
+                Color c2 = Contacts[j].GetComponent<SpriteRenderer>().color;
+                if (c2 == sr.color)
+                    return;
 
-            framesCount *= 0;
-            
-            //mix only in movement
-
-            if (rb.velocity.sqrMagnitude < 0.00000001f)
-              return;
-
-            int i = Physics2D.OverlapCircleNonAlloc(rb.position, cc.radius * 8f, Contacts, 1 << gameObject.layer);
-
-            if (i > 0)
-            {
-
-
-                for (int j = 0; j < Contacts.Length; j++)
+                sr.color = Color.Lerp(sr.color, c2, 0.045f);
+                if (Contacts[j].GetComponent<MetaballParticleClass>().SpawnerParent.Blending)
                 {
-                    if (Contacts[j] == null)
-                        continue;
-
-                    if (!Contacts[j].gameObject.activeSelf)
-                        continue;
-
-                    if (Contacts[j].GetInstanceID() == gameObject.GetInstanceID())
-                        continue;
-
-                    if (Contacts[j].tag != "Metaball_liquid")
-                        continue;
-
-                    //print("blending");
-                    Color c2 = Contacts[j].GetComponent<SpriteRenderer>().color;
-                    //print(j);
-                    if (c2 == sr.color)
-                        return;
-
-                    //print("mixing");
-
-                    sr.color = Color.Lerp(sr.color, c2, .045f);
-                    if (Contacts[j].GetComponent<MetaballParticleClass>().SpawnerParent.Blending) {
-                        Contacts[j].GetComponent<SpriteRenderer>().color = Color.Lerp(c2, sr.color, .045f);
-                    }
-                    
+                    Contacts[j].GetComponent<SpriteRenderer>().color = Color.Lerp(c2, sr.color, 0.045f);
                 }
-
             }
-
-
         }
     }
 
-    void Blend2()
+    // Re-adding missing methods
+    public void SetColor(Color _color)
     {
-        if (true)
+        if (sr != null)
         {
-
-            if (cc == null)
-                return;
-
-           
-
-            if (framesCount < breathFrames)
-            {
-                framesCount++;
-                return;
-            }
-
-            framesCount *= 0;
-
-            //mix only in movement
-
-            if (rb.velocity.sqrMagnitude < 0.00000001f)
-                return;
-
-            int c = 0;
-            int ContactsMax = 60;
-            MetaballParticleClass []_contacts = new MetaballParticleClass[ContactsMax] ;
-
-           
-
-            if (Water2D.SpawnersManager.instance == null)
-                Water2D.SpawnersManager.GetAllParticles();
-            
-
-            if (Water2D.SpawnersManager.instance._allparticles == null)
-                return;
-            
-
-            for (int i = 0; i < Water2D.SpawnersManager.instance._allparticles.Length; i++)
-            {
-                if (c >= ContactsMax)
-                    break;
-
-                if (Water2D.SpawnersManager.instance._allparticles[i].gameObject.GetHashCode() == gameObject.GetHashCode())
-                    continue;
-
-                if (!Water2D.SpawnersManager.instance._allparticles[i].gameObject.activeSelf)
-                    continue;
-
-                if (Water2D.SpawnersManager.instance._allparticles[i].gameObject.tag != "Metaball_liquid")
-                    continue;
-
-                if ((Water2D.SpawnersManager.instance._allparticles[i].transform.position - gameObject.transform.position).sqrMagnitude < (cc.radius +.1f) * (cc.radius + .1f))
-                {
-                    // Contact!SpawnersManager.instance._allparticles[i];
-                    c++;
-                   
-                }
-            }
-            
-
-            //int i = Physics2D.OverlapCircleNonAlloc(rb.position, cc.radius * .9f, Contacts, 1 << gameObject.layer);
-
-            if (c > 0)
-            {
-
-                for (int j = 0; j < _contacts.Length; j++)
-                {
-                    if (_contacts[j] == null)
-                        continue;
-
-                    
-                    Color c2 = _contacts[j].gameObject.GetComponent<SpriteRenderer>().color;
-
-                    if (c2 == sr.color)
-                        return;
-
-
-
-                    sr.color = Color.LerpUnclamped(sr.color, c2, .02f);
-                   // print(sr.color + " " + c2);
-                }
-
-            }
-
-
+            sr.color = _color;
         }
     }
 
+    public void SetFreeze(bool _val = true)
+    {
+        _isFreeze = _val;
+        rb.constraints = _val ? RigidbodyConstraints2D.FreezeAll : RigidbodyConstraints2D.None;
+    }
 
+    public bool GetFreeze()
+    {
+        return _isFreeze;
+    }
+
+    public void SetHighDensity(bool _val = true)
+    {
+        _isFreeze = _val;
+        rb.angularDrag = _val ? 25f : 0f;
+        rb.constraints = _val ? RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.None;
+    }
+
+    public void removeGlow()
+    {
+        if (glowSP != null)
+        {
+            glowSP.enabled = false;
+        }
+    }
 }

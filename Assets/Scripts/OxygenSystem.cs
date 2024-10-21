@@ -35,4 +35,8 @@ public class OxygenSystem : MonoBehaviour
     {
         return oxygenDrainRate;
     }
+    public float GetMaxOxygen()
+    {
+        return maxOxygen;
+    }
 }
