@@ -45,6 +45,12 @@ public class PlayerController : MonoBehaviour
     bool hasPlayedDrownSound = false;
     bool hasJumped = false;
 
+    [SerializeField] public ParticleSystem bubblePrefab;
+    private ParticleSystem bubbleParticleSystem;
+    private ParticleSystem.EmissionModule bubbleEmission;
+    [SerializeField] public float emissionRateFactor = 10f;
+    private Vector3 previousPosition;
+
     public Rigidbody2D rb;
 
     public bool GetGrounded()
@@ -89,6 +95,12 @@ public class PlayerController : MonoBehaviour
         {
             oxygenSystem = GetComponent<OxygenSystem>();
         }
+        if (bubblePrefab != null)
+        {
+            bubbleParticleSystem = Instantiate(bubblePrefab, transform);
+            bubbleEmission = bubbleParticleSystem.emission;
+            bubbleParticleSystem.Stop();
+        }
     }
 
     void Update()
@@ -107,11 +119,21 @@ public class PlayerController : MonoBehaviour
                 swimAudioSource.Play();
                 isPlayingSwimSound = true;
             }
+            // Start emitting bubbles
+            if (!bubbleParticleSystem.isPlaying)
+            {
+                bubbleParticleSystem.Play();
+            }
         }
         else
         {
             StopSound(swimAudioSource);  // Stop swim sound when leaving water
             isPlayingSwimSound = false;
+            // Stop emitting bubbles when exiting water
+            if (bubbleParticleSystem.isPlaying)
+            {
+                bubbleParticleSystem.Stop();
+            }
             oxygenSystem.RefillOxygen();
         }
         Debug.Log(oxygenSystem.GetCurrentOxygen());
@@ -143,6 +165,7 @@ public class PlayerController : MonoBehaviour
 
         UpdateAnimator();
         HandleFootsteps();  // Handle footsteps sound
+        AdjustBubbleEmissionBasedOnVelocity(m_moveDirection);
     }
 
     private void FixedUpdate()
@@ -161,6 +184,58 @@ public class PlayerController : MonoBehaviour
         else
         {
             rb.gravityScale = gravityScale;
+        }
+    }
+
+    private void AdjustBubbleEmissionBasedOnVelocity(Vector2 m_moveDirection)
+    {
+        if (bubbleParticleSystem == null) return;
+
+        // Calculate current speed and direction of movement
+        float currentSpeed = (transform.position - previousPosition).magnitude / Time.deltaTime;
+        Vector3 bubbleDirection = (transform.position - previousPosition).normalized;
+
+        // Set up the velocity over lifetime module
+        var velocityModule = bubbleParticleSystem.velocityOverLifetime;
+        velocityModule.enabled = true;  // Enable the velocity over lifetime module
+
+        // Ensure constant upward velocity (independent of player direction)
+        velocityModule.y = new ParticleSystem.MinMaxCurve(0.5f);  // Constant upward force
+
+        if (currentSpeed > 0.1f)  // Only emit bubbles when moving
+        {
+            if (!bubbleParticleSystem.isPlaying)
+            {
+                bubbleParticleSystem.Play();  // Start emitting bubbles if they aren't already
+            }
+
+            previousPosition = transform.position;  // Update the previous position
+
+            // Ensure minimum and consistent emission rate based on speed
+            float emissionRate = Mathf.Max(3f, Mathf.Lerp(3f, emissionRateFactor, currentSpeed / m_movementSpeed));  // Ensuring a minimum of 3
+
+            // Update the emission rate in the particle system
+            bubbleEmission.rateOverTime = emissionRate;
+
+            // Adjust horizontal velocity based on movement direction
+            float horizontalVelocity = 0.0f;  // Default to no horizontal movement
+
+            if (bubbleDirection.x < 0)  // Player is moving left
+            {
+                horizontalVelocity = 0.1f;  // Bubbles drift slightly to the right
+            }
+            else if (bubbleDirection.x > 0)  // Player is moving right
+            {
+                horizontalVelocity = -0.1f;  // Bubbles drift slightly to the left
+            }
+
+            // Apply both horizontal and upward velocities
+            velocityModule.x = new ParticleSystem.MinMaxCurve(horizontalVelocity);
+        }
+        else  // If the player is not moving
+        {
+            // Reduce emission rate to zero but don't stop the particle system
+            bubbleEmission.rateOverTime = 0;
         }
     }
 

@@ -19,7 +19,7 @@ public class OxygenSystem : MonoBehaviour
 
     public void RefillOxygen()
     {
-        currentOxygen = Mathf.Min(currentOxygen + (oxygenRegenRate * Time.deltaTime), maxOxygen);
+        currentOxygen = Mathf.Min(currentOxygen + (oxygenRegenRate * Time.deltaTime * 3), maxOxygen);
     }
 
     public void DrainOxygen()
