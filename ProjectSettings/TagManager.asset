@@ -51,3 +51,15 @@ TagManager:
   - name: Player
     uniqueID: 930523329
     locked: 0
+  - name: GroundWalls
+    uniqueID: 1652279685
+    locked: 0
+  - name: Water
+    uniqueID: 2396865971
+    locked: 0
+  - name: Doors
+    uniqueID: 1245432489
+    locked: 0
+  - name: Items
+    uniqueID: 4199275701
+    locked: 0
