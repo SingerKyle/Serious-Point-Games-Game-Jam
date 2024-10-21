@@ -23,6 +23,9 @@ public class Door : MonoBehaviour
     private bool hasPlayedLockedSound = false; // Ensures locked sound only plays when the door is locked
     private bool hasPlayedLockedAttempt = false; // Ensures locked attempt sound only plays once per interaction
 
+    [SerializeField] SpriteRenderer openSprite;
+    [SerializeField] SpriteRenderer closeSprite;
+
     private void Awake()
     {
         doorCollider = GetComponent<Collider2D>();
@@ -41,6 +44,13 @@ public class Door : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        //openSprite = GetComponentInChildren<SpriteRenderer>();
+        //closeSprite = GetComponent<SpriteRenderer>();
+        openSprite.enabled = false;
+    }
+
     private IEnumerator OpenDoor(Collider2D playerCollider)
     {
         // Set bool - stops door being spammed
@@ -55,7 +65,8 @@ public class Door : MonoBehaviour
         }
 
         // Add anim if we want one:
-        // (Optional: Add door opening animation here)
+        openSprite.enabled = true;
+        closeSprite.enabled = false;
 
         // Disable collision (open door)
         doorCollider.isTrigger = true;
@@ -71,6 +82,9 @@ public class Door : MonoBehaviour
         Debug.Log("Door Closed!");
 
         // Add Closed Sound (Optional: Add a closing sound if needed)
+
+        openSprite.enabled = false;
+        closeSprite.enabled = true;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

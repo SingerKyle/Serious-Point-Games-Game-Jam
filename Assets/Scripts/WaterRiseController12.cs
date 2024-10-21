@@ -26,6 +26,8 @@ public class WaterRiseController12 : MonoBehaviour
         {
             Debug.LogError("Target door not assigned.");
         }
+
+        Debug.Log("12 startPos - " + startPosition + " targetPos - " + targetPosition);
     }
 
     void Update()

@@ -310,6 +310,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            // Debug.Log("Entering water, starting swimming.");
+            m_isSwimming = true;
+            animator.SetBool("isSwimming", m_isSwimming);
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
