@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
     // Physics Body
     public Rigidbody2D rb;
 
+    public bool GetGrounded()
+    {
+        return m_isGrounded;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

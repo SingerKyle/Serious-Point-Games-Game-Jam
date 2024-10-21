@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class LightFlicker : MonoBehaviour
 {
-    [SerializeField] private Light2D light;
+    [SerializeField] private Light2D myLight;
     [SerializeField] private float minLightIntensity;
     [SerializeField] private float maxLightIntensity;
     [SerializeField] private float flickerSpeed;
@@ -14,13 +14,13 @@ public class LightFlicker : MonoBehaviour
 
     private void Start()
     {
-        if (light == null)
+        if (myLight == null)
         {
-            light = GetComponent<Light2D>();
+            myLight = GetComponent<Light2D>();
         }
         else
         {
-            maxLightIntensity = light.intensity;
+            maxLightIntensity = myLight.intensity;
         }
     }
 
@@ -28,6 +28,6 @@ public class LightFlicker : MonoBehaviour
     {
         timer += flickerSpeed * Time.deltaTime;
         float intensity = Mathf.Lerp(minLightIntensity, maxLightIntensity, Mathf.PingPong(timer, 1));
-        light.intensity = intensity;
+        myLight.intensity = intensity;
     }
 }
