@@ -219,6 +219,7 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("We've hit dry captain");
             m_isGrounded = true;
+            animator.SetBool("isGrounded", m_isGrounded);
             //m_isSwimming = false;
         }
 
@@ -248,6 +249,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             m_isGrounded = false;
+            animator.SetBool("isGrounded", m_isGrounded);
             //Debug.Log("Exiting the ground");
         }
 
