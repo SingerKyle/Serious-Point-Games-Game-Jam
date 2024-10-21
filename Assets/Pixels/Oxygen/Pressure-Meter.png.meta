@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 21a34748aefa1574dad2661d34437840
+guid: a3b4cb67ca6ed244d893d499f40a87b2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 838462372697148754
-    second: DeadCaptain_0
+      213: -8661181213964653010
+    second: Pressure-Meter_0
+  - first:
+      213: -6284255180274730437
+    second: Pressure-Meter_1
+  - first:
+      213: 6316210768157673278
+    second: Pressure-Meter_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DeadCaptain_0
+      name: Pressure-Meter_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 0
-        width: 58
-        height: 22
+        x: 0
+        y: 7
+        width: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +120,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 25d052ae511d2ab00800000000000000
-      internalID: 838462372697148754
+      spriteID: e2ea956239d4dc780800000000000000
+      internalID: -8661181213964653010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pressure-Meter_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 16
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3af0dd7537d9c8a0800000000000000
+      internalID: -6284255180274730437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pressure-Meter_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 16
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e37098a9a30b7a750800000000000000
+      internalID: 6316210768157673278
       vertices: []
       indices: 
       edges: []
@@ -130,8 +178,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      DeadCaptain_0: 838462372697148754
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

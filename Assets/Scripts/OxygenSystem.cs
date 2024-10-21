@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OxygenSystem : MonoBehaviour
 {
@@ -12,9 +13,17 @@ public class OxygenSystem : MonoBehaviour
     [SerializeField] private float oxygenDrainRate = 1f;
     [SerializeField] private float oxygenRegenRate = 2f;
 
+    [SerializeField] public Image OxygenHUD;
+
     public void Start()
     {
         currentOxygen = maxOxygen;
+    }
+
+    private void Update()
+    {
+        float fillAmount = currentOxygen / maxOxygen;
+        OxygenHUD.fillAmount = fillAmount;
     }
 
     public void RefillOxygen()
